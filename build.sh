@@ -14,6 +14,7 @@ BINARY=$(cargo read-manifest | jq ".name" -r)
 if [ -x "./build.sh" ]; then
   OUTPUT=`./build.sh "${CMD_PATH}"`
 else
+  rustup target add "$RUSTTARGET"
   cargo build --release --target "$RUSTTARGET"
   OUTPUT="target/$RUSTTARGET/release/$BINARY"
 fi
