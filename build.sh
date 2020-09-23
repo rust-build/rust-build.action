@@ -2,7 +2,7 @@
 
 set -eux
 
-PROJECT_ROOT="/rust/src/github.com/${GITHUB_REPOSITORY}"
+PROJECT_ROOT="/rust/build/${GITHUB_REPOSITORY}"
 
 mkdir -p $PROJECT_ROOT
 rmdir $PROJECT_ROOT
@@ -19,4 +19,5 @@ else
   OUTPUT="target/$RUSTTARGET/release/$BINARY"
 fi
 
-echo ${OUTPUT}
+mv "$OUTPUT" "./$BINARY"
+echo ${BINARY}

@@ -3,7 +3,7 @@
 set -eux
 
 if [ -z "${CMD_PATH+x}" ]; then
-  echo "::warning file=entrypoint.sh,line=6,col=1::CMD_PATH not set"
+  # echo "::warning file=entrypoint.sh,line=6,col=1::CMD_PATH not set"
   export CMD_PATH=""
 fi
 
@@ -25,10 +25,10 @@ FILE_LIST="${FILE_LIST} ${EXTRA_FILES}"
 
 FILE_LIST=`echo "${FILE_LIST}" | awk '{$1=$1};1'`
 
-ARCHIVE=tmp.tgz
+ARCHIVE=tmp.tar.gz
 tar cvfz $ARCHIVE ${FILE_LIST}
 
-CHECKSUM=$(md5sum ${ARCHIVE} | cut -d ' ' -f 1)
+CHECKSUM=$(sha256sum ${ARCHIVE} | cut -d ' ' -f 1)
 
 curl \
   -X POST \

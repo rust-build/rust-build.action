@@ -6,6 +6,9 @@ inputs:
     required: true
   GITHUB_TOKEN:
     required: true
+  EXTRA_FILES:
+    description: 'List of extra files to include in build'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
