@@ -10,6 +10,7 @@ LABEL "repository"="http://github.com/Douile/rust-release.action"
 
 LABEL "maintainer"="Douile <25043847+Douile@users.noreply.github.com>"
 
+RUN apt update
 RUN apt install curl jq git build-base bash openssl-dev gcc pkgconfig build-essential
 
 ADD entrypoint.sh ./entrypoint.sh
