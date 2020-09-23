@@ -20,9 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Compile and release
-        uses: Douile/rust-build.action@v0.1.1
+        uses: Douile/rust-build.action@v0.1.7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUSTTARGET: ${{ matrix.target }}
           EXTRA_FILES: "README.md LICENSE"
 ```
+_Some target triples may not work_
