@@ -15,8 +15,7 @@ if [ -x "./build.sh" ]; then
   OUTPUT=`./build.sh "${CMD_PATH}"`
 else
   rustup target add "$RUSTTARGET"
-  rustup init -t "$RUSTTARGET" -y
-  cargo build --release --target "$RUSTTARGET"
+  OPENSSL_LIB_DIR=/usr/lib64 OPENSSL_INCLUDE_DIR=/usr/include/openssl cargo build --release --target "$RUSTTARGET"
   OUTPUT="target/$RUSTTARGET/release/$BINARY"
 fi
 
