@@ -20,4 +20,4 @@ else
 fi
 
 mv "$OUTPUT" "./$BINARY"
-echo ${BINARY}
+echo "$BINARY"
