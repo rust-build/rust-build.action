@@ -8,8 +8,15 @@ if [ -z "${CMD_PATH+x}" ]; then
 fi
 
 echo "::info Installing additional linkers"
+case ${RUSTTARGET} in
+"x86_64-pc-windows-gnu") apk add --no-cache mingw-w64-gcc ;;
+"x86_64-unknown-linux-musl") ;;
+*)
+echo "::error file=entrypoint.sh,line=13::${RUSTTARGET} is not supported" ;;
+# exit 1
+esac
+
 if [[ "${RUSTTARGET}" == "x86_64-pc-windows-gnu" ]]; then
-  apk add --no-cache mingw-w64-gcc
 fi
 
 FILE_LIST=`/build.sh`
