@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -eux
 
@@ -23,9 +23,9 @@ fi
 
 FILE_LIST="${FILE_LIST} ${EXTRA_FILES}"
 
-FILE_LIST=`echo "${FILE_LIST}" | awk '{$1=$1};1'`
+FILE_LIST=$(echo "${FILE_LIST}" | awk '{$1=$1};1')
 
-ARCHIVE=tmp.tar.gz
+ARCHIVE="tmp.tar.gz"
 echo "::info Packing files: $FILE_LIST"
 tar cvfz $ARCHIVE ${FILE_LIST}
 
