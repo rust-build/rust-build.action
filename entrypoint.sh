@@ -3,7 +3,7 @@
 set -eux
 
 if [ -z "${CMD_PATH+x}" ]; then
-  # echo "::warning file=entrypoint.sh,line=6,col=1::CMD_PATH not set"
+  echo "::warning file=entrypoint.sh::CMD_PATH not set"
   export CMD_PATH=""
 fi
 
@@ -11,8 +11,10 @@ echo "::info Installing additional linkers"
 case ${RUSTTARGET} in
 "x86_64-pc-windows-gnu") apk add --no-cache mingw-w64-gcc ;;
 "x86_64-unknown-linux-musl") ;;
+"x86_64-unknown-linux-gnu") apk add --no-cache gcc ;;
+"x86_64-apple-darwin") apk add --no-cache gcc ;;
 *)
-echo "::error file=entrypoint.sh,line=13::${RUSTTARGET} is not supported" ;;
+echo "::error file=entrypoint.sh::${RUSTTARGET} is not supported" ;;
 # exit 1
 esac
 
@@ -27,7 +29,7 @@ PROJECT_NAME=$(basename $GITHUB_REPOSITORY)
 NAME="${NAME:-${PROJECT_NAME}_${RELEASE_NAME}}_${RUSTTARGET}"
 
 if [ -z "${EXTRA_FILES+x}" ]; then
-  echo "::warning file=entrypoint.sh,line=22,col=1::EXTRA_FILES not set"
+  echo "::warning file=entrypoint.sh::EXTRA_FILES not set"
 fi
 
 FILE_LIST="${FILE_LIST} ${EXTRA_FILES}"
