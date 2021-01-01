@@ -7,6 +7,11 @@ if [ -z "${CMD_PATH+x}" ]; then
   export CMD_PATH=""
 fi
 
+echo "::info Installing additional linkers"
+if [[ "${RUSTTARGET}" == "x86_64-pc-windows-gnu" ]]; then
+  apk add --no-cache mingw-w64-gcc
+fi
+
 FILE_LIST=`/build.sh`
 
 EVENT_DATA=$(cat $GITHUB_EVENT_PATH)
