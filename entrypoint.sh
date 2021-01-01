@@ -16,9 +16,6 @@ echo "::error file=entrypoint.sh,line=13::${RUSTTARGET} is not supported" ;;
 # exit 1
 esac
 
-if [[ "${RUSTTARGET}" == "x86_64-pc-windows-gnu" ]]; then
-fi
-
 FILE_LIST=`/build.sh`
 
 EVENT_DATA=$(cat $GITHUB_EVENT_PATH)
