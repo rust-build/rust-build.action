@@ -24,4 +24,7 @@ fi
 echo "Saving $OUTPUT..." >&2
 
 mv $OUTPUT ./
-echo $OUTPUT
+
+for $f in $OUTPUT; do
+  echo $(basename $f)
+done
