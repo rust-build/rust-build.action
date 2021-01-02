@@ -43,4 +43,4 @@ curl \
   --data $CHECKSUM \
   -H 'Content-Type: text/plain' \
   -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-  "${UPLOAD_URL}?name=${NAME}_checksum.txt"
+  "${UPLOAD_URL}?name=${NAME}.sha256sum"
