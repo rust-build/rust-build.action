@@ -16,7 +16,7 @@ case ${RUSTTARGET} in
 "x86_64-apple-darwin")
 # Cross-compile for mac-os
 # https://wapl.es/rust/2019/02/17/rust-cross-compile-linux-to-macos.html 
-apk add --no-cache gcc g++ clang cmake zlib-dev mpc1-dev mpfr-dev gmp-dev
+apk add --no-cache gcc g++ clang cmake zlib-dev mpc1-dev mpfr-dev gmp-dev libxml2-dev
 git clone https://github.com/tpoechtrager/osxcross
 cd osxcross
 curl -O https://s3.dockerproject.org/darwin/v2/MacOSX10.10.sdk.tar.xz
@@ -28,7 +28,12 @@ echo "linker = \"x86_64-apple-darwin14-clang\"" >> .cargo/config
 echo "ar = \"x86_64-apple-darwin14-ar\"" >> .cargo/config
 ;;
 "wasm32-wasi") ;;
-"wasm32-unknown-emscripten") apk add --no-cache emscripten-fastcomp ;;
+"wasm32-unknown-emscripten") 
+apk add --no-cache emscripten-fastcomp 
+echo "[target.wasm32-unknown-emscripten]" >> .cargo/config
+echo "linker = \"/usr/lib/emscripten-fastcomp/bin/clang\"" >> .cargo/config
+echo "ar = \"/usr/lib/emscripten-fastcomp/bin/llvm-ar\"" >> .cargo/config
+;;
 *)
 echo "::error file=entrypoint.sh::${RUSTTARGET} is not supported" ;;
 # exit 1
