@@ -21,10 +21,16 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Compile and release
-        uses: Douile/rust-build.action@v0.1.23
+        uses: Douile/rust-build.action@v0.1.24
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUSTTARGET: ${{ matrix.target }}
           EXTRA_FILES: "README.md LICENSE"
 ```
 _Some target triples may not work_
+
+Supported targets
+- `x86_64-pc-windows-gnu`
+- `x86_64-unkown-linux-musl`
+- `x86_64-unkown-linux-gnu`
+- `wasm32-wasi` 
