@@ -21,7 +21,7 @@ git clone https://github.com/tpoechtrager/osxcross
 cd osxcross
 curl -O https://s3.dockerproject.org/darwin/v2/MacOSX10.10.sdk.tar.xz
 mv MacOSX10.10.sdk.tar.xz tarballs/
-UNATTENDED=yes OSX_VERSION_MIN=10.7 ./build.sh
+UNATTENDED=yes OSX_VERSION_MIN=10.7 OCDEBUG=1 ./build.sh
 cd ..
 mkdir -p /.cargo
 touch /.cargo/config.toml
@@ -34,10 +34,11 @@ echo "ar = \"x86_64-apple-darwin14-ar\"" >> /.cargo/config.toml
 apk add --no-cache emscripten-fastcomp
 mkdir -p /.cargo
 touch /.cargo/config.toml 
-echo "[target.wasm32-unknown-emscripten]" >> .cargo/config.toml
-echo "linker = \"/usr/lib/emscripten-fastcomp/bin/clang\"" >> .cargo/config.toml
-echo "ar = \"/usr/lib/emscripten-fastcomp/bin/llvm-ar\"" >> .cargo/config.toml
+echo "[target.wasm32-unknown-emscripten]" >> /.cargo/config.toml
+echo "linker = \"/usr/lib/emscripten-fastcomp/bin/clang\"" >> /.cargo/config.toml
+echo "ar = \"/usr/lib/emscripten-fastcomp/bin/llvm-ar\"" >> /.cargo/config.toml
 ;;
+"arm-unknown-linux-gnueabi") apk add --no-cache gcc-arm-none-eabi ;;
 *)
 echo "::error file=entrypoint.sh::${RUSTTARGET} is not supported" ;;
 # exit 1
