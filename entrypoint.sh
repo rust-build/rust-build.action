@@ -7,18 +7,7 @@ if [ -z "${CMD_PATH+x}" ]; then
   export CMD_PATH=""
 fi
 
-echo "::info Installing additional linkers"
-case ${RUSTTARGET} in
-"x86_64-pc-windows-gnu") apk add --no-cache mingw-w64-gcc ;;
-"x86_64-unknown-linux-musl") ;;
-"x86_64-unknown-linux-gnu") apk add --no-cache gcc ;;
-"x86_64-apple-darwin") apk add --no-cache gcc ;;
-*)
-echo "::error file=entrypoint.sh::${RUSTTARGET} is not supported" ;;
-# exit 1
-esac
-
-FILE_LIST=`/build.sh`
+FILE_LIST=$(/build.sh)
 
 EVENT_DATA=$(cat $GITHUB_EVENT_PATH)
 echo $EVENT_DATA | jq .
