@@ -16,27 +16,27 @@ case ${RUSTTARGET} in
 "x86_64-apple-darwin")
 # Cross-compile for mac-os
 # https://wapl.es/rust/2019/02/17/rust-cross-compile-linux-to-macos.html 
-apk add --no-cache gcc g++ clang cmake zlib-dev mpc1-dev mpfr-dev gmp-dev libxml2-dev
+apk add --no-cache gcc g++ clang cmake zlib-dev mpc1-dev mpfr-dev gmp-dev libxml2-dev openssl-dev
 git clone https://github.com/tpoechtrager/osxcross
 cd osxcross
 curl -O https://s3.dockerproject.org/darwin/v2/MacOSX10.10.sdk.tar.xz
 mv MacOSX10.10.sdk.tar.xz tarballs/
 UNATTENDED=yes OSX_VERSION_MIN=10.7 ./build.sh
 cd ..
-echo "[target.x86_64-apple-darwin]" >> .cargo/config
-echo "linker = \"x86_64-apple-darwin14-clang\"" >> .cargo/config
-echo "ar = \"x86_64-apple-darwin14-ar\"" >> .cargo/config
+mkdir -p /.cargo
+touch /.cargo/config.toml
+echo "[target.x86_64-apple-darwin]" >> /.cargo/config.toml
+echo "linker = \"x86_64-apple-darwin14-clang\"" >> /.cargo/config.toml
+echo "ar = \"x86_64-apple-darwin14-ar\"" >> /.cargo/config.toml
 ;;
 "wasm32-wasi") ;;
 "wasm32-unknown-emscripten") 
-apk add --no-cache emscripten-fastcomp 
-echo "[target.wasm32-unknown-emscripten]" >> .cargo/config
-echo "linker = \"/usr/lib/emscripten-fastcomp/bin/clang\"" >> .cargo/config
-echo "ar = \"/usr/lib/emscripten-fastcomp/bin/llvm-ar\"" >> .cargo/config
-;;
-"aarch64-unknown-linux-musl") 
-rustup toolchain install stable-aarch64-unknown-linux-musl
-rustup default stable-aarch64-unknown-linux-musl
+apk add --no-cache emscripten-fastcomp
+mkdir -p /.cargo
+touch /.cargo/config.toml 
+echo "[target.wasm32-unknown-emscripten]" >> .cargo/config.toml
+echo "linker = \"/usr/lib/emscripten-fastcomp/bin/clang\"" >> .cargo/config.toml
+echo "ar = \"/usr/lib/emscripten-fastcomp/bin/llvm-ar\"" >> .cargo/config.toml
 ;;
 *)
 echo "::error file=entrypoint.sh::${RUSTTARGET} is not supported" ;;
