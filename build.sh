@@ -34,6 +34,10 @@ echo "[target.wasm32-unknown-emscripten]" >> .cargo/config
 echo "linker = \"/usr/lib/emscripten-fastcomp/bin/clang\"" >> .cargo/config
 echo "ar = \"/usr/lib/emscripten-fastcomp/bin/llvm-ar\"" >> .cargo/config
 ;;
+"aarch64-unknown-linux-musl") 
+rustup toolchain install stable-aarch64-unknown-linux-musl
+rustup default stable-aarch64-unknown-linux-musl
+;;
 *)
 echo "::error file=entrypoint.sh::${RUSTTARGET} is not supported" ;;
 # exit 1
