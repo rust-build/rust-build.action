@@ -9,6 +9,9 @@ inputs:
   EXTRA_FILES:
     description: 'List of extra files to include in build'
     required: false
+  SRC_DIR:
+    description: 'Path to directory containing Cargo.toml (defaults to project root)'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
