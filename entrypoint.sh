@@ -7,7 +7,10 @@ if [ -z "${CMD_PATH+x}" ]; then
   export CMD_PATH=""
 fi
 
-FILE_LIST=$(/build.sh)
+OUTPUT_DIR="/output"
+mkdir -p "$OUTPUT_DIR"
+
+FILE_LIST=$(/build.sh "$OUTPUT_DIR")
 
 EVENT_DATA=$(cat $GITHUB_EVENT_PATH)
 echo $EVENT_DATA | jq .
@@ -19,7 +22,13 @@ NAME="${NAME:-${PROJECT_NAME}_${RELEASE_NAME}}_${RUSTTARGET}"
 
 if [ -z "${EXTRA_FILES+x}" ]; then
   echo "::warning file=entrypoint.sh::EXTRA_FILES not set"
+else
+  for file in "$(echo -n "${EXTRA_FILES}" | tr " " "\n")"; do
+    cp "$file" "$OUTPUT_DIR"
+  done
 fi
+
+cd "$OUTPUT_DIR"
 
 FILE_LIST="${FILE_LIST} ${EXTRA_FILES}"
 

@@ -10,6 +10,7 @@ error() {
 
 set -eux
 PROJECT_ROOT="/rust/build/${GITHUB_REPOSITORY}"
+OUTPUT_DIR="$1"
 
 mkdir -p $PROJECT_ROOT
 rmdir $PROJECT_ROOT
@@ -72,7 +73,7 @@ fi
 
 info "Saving $OUTPUT..."
 
-cp $OUTPUT "$PROJECT_ROOT/" || error "Unable to copy binary" "$(tree)"
+mv $OUTPUT "$OUTPUT_DIR" || error "Unable to copy binary"
 
 OUTPUT_LIST=""
 for f in $OUTPUT; do
