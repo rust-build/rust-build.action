@@ -53,8 +53,9 @@ echo "ar = \"/usr/lib/emscripten-fastcomp/bin/llvm-ar\"" >> /.cargo/config.toml
 ;;
 "arm-unknown-linux-gnueabi") apk add --no-cache gcc-arm-none-eabi ;;
 *)
-error "${RUSTTARGET} is not supported" ;;
+error "${RUSTTARGET} is not supported"
 exit 1
+;;
 esac
 
 BINARY=$(cargo read-manifest | jq ".name" -r)
