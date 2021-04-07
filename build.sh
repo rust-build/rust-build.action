@@ -64,7 +64,7 @@ BINARY=$(cargo read-manifest | jq ".name" -r)
 info "Building $BINARY..."
 
 if [ -x "./build.sh" ]; then
-  OUTPUT=`./build.sh "${CMD_PATH}"`
+  OUTPUT=`./build.sh "${CMD_PATH}" "${OUTPUT_DIR}"`
 else
   rustup target add "$RUSTTARGET"
   OPENSSL_LIB_DIR=/usr/lib64 OPENSSL_INCLUDE_DIR=/usr/include/openssl cargo build --release --target "$RUSTTARGET" --bins
