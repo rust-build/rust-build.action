@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-log() {
+info() {
   echo "::info $@" >&2
 }
 
@@ -17,11 +17,11 @@ ln -s $GITHUB_WORKSPACE $PROJECT_ROOT
 cd $PROJECT_ROOT
 
 if [ "" != "$SRC_DIR" ]; then
-  log "Switching to src dir \"$SRC_DIR\""
+  info "Switching to src dir \"$SRC_DIR\""
   cd $SRC_DIR
 fi
 
-log "Installing additional linkers"
+info "Installing additional linkers"
 case ${RUSTTARGET} in
 "x86_64-pc-windows-gnu") apk add --no-cache mingw-w64-gcc ;;
 "x86_64-unknown-linux-musl") ;;
