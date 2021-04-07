@@ -25,34 +25,25 @@ fi
 info "Installing additional linkers"
 case ${RUSTTARGET} in
 "x86_64-pc-windows-gnu") apk add --no-cache mingw-w64-gcc ;;
+
 "x86_64-unknown-linux-musl") ;;
-"x86_64-unknown-linux-gnu") apk add --no-cache gcc ;;
-"x86_64-apple-darwin")
-# Cross-compile for mac-os
-# https://wapl.es/rust/2019/02/17/rust-cross-compile-linux-to-macos.html 
-apk add --no-cache gcc g++ clang cmake zlib-dev mpc1-dev mpfr-dev gmp-dev libxml2-dev openssl-dev
-git clone https://github.com/tpoechtrager/osxcross
-cd osxcross
-curl -O https://s3.dockerproject.org/darwin/v2/MacOSX10.10.sdk.tar.xz
-mv MacOSX10.10.sdk.tar.xz tarballs/
-UNATTENDED=yes OSX_VERSION_MIN=10.7 OCDEBUG=1 ./build.sh
-cd ..
-mkdir -p /.cargo
-touch /.cargo/config.toml
-echo "[target.x86_64-apple-darwin]" >> /.cargo/config.toml
-echo "linker = \"x86_64-apple-darwin14-clang\"" >> /.cargo/config.toml
-echo "ar = \"x86_64-apple-darwin14-ar\"" >> /.cargo/config.toml
+
+"x86_64-unknown-linux-gnu") 
+error "x86_64-unknown-linux-gnu is not supported: please use x86_64-unknown-linux-musl for a statically linked c library"
+exit 1
 ;;
+
 "wasm32-wasi") ;;
 "wasm32-unknown-emscripten") 
 apk add --no-cache emscripten-fastcomp
 mkdir -p /.cargo
-touch /.cargo/config.toml 
-echo "[target.wasm32-unknown-emscripten]" >> /.cargo/config.toml
-echo "linker = \"/usr/lib/emscripten-fastcomp/bin/clang\"" >> /.cargo/config.toml
-echo "ar = \"/usr/lib/emscripten-fastcomp/bin/llvm-ar\"" >> /.cargo/config.toml
+cat > /.cargo/config.toml << EOF
+[target.wasm32-unknown-emscripten]
+linker = "/usr/lib/emscripten-fastcomp/bin/clang"
+ar = "/usr/lib/emscripten-fastcomp/bin/llvm-ar"
+EOF
 ;;
-"arm-unknown-linux-gnueabi") apk add --no-cache gcc-arm-none-eabi ;;
+
 *)
 error "${RUSTTARGET} is not supported"
 exit 1

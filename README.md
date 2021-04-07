@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [x86_64-pc-windows-gnu, x86_64-unknown-linux-musl, x86_64-unknown-linux-gnu]
+        target: [x86_64-pc-windows-gnu, x86_64-unknown-linux-musl]
     steps:
       - uses: actions/checkout@master
       - name: Compile and release
@@ -35,5 +35,4 @@ _Many target triples do not work, I am working on adding more support_
 Supported targets
 - `x86_64-pc-windows-gnu`
 - `x86_64-unkown-linux-musl`
-- `x86_64-unkown-linux-gnu`
 - `wasm32-wasi` 
