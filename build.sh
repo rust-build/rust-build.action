@@ -72,7 +72,7 @@ fi
 
 info "Saving $OUTPUT..."
 
-mv $OUTPUT "$PROJECT_ROOT"
+mv $OUTPUT "$PROJECT_ROOT/"
 
 OUTPUT_LIST=""
 for f in $OUTPUT; do
