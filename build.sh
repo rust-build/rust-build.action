@@ -72,7 +72,7 @@ fi
 
 info "Saving $OUTPUT..."
 
-mv $OUTPUT "$PROJECT_ROOT/"
+cp $OUTPUT "$PROJECT_ROOT/" || error "Unable to copy binary" "$(tree)"
 
 OUTPUT_LIST=""
 for f in $OUTPUT; do
