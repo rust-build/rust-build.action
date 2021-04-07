@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+log() {
+  echo "::info $@" >&2
+}
+
+error() {
+  echo "::error file=entrypoint.sh:: $@" >&2
+}
+
 set -eux
 PROJECT_ROOT="/rust/build/${GITHUB_REPOSITORY}"
 
@@ -9,11 +17,11 @@ ln -s $GITHUB_WORKSPACE $PROJECT_ROOT
 cd $PROJECT_ROOT
 
 if [ "" != "$SRC_DIR" ]; then
-  echo "::info Switching to src dir \"$SRC_DIR\""
+  log "Switching to src dir \"$SRC_DIR\""
   cd $SRC_DIR
 fi
 
-echo "::info Installing additional linkers" >&2
+log "Installing additional linkers"
 case ${RUSTTARGET} in
 "x86_64-pc-windows-gnu") apk add --no-cache mingw-w64-gcc ;;
 "x86_64-unknown-linux-musl") ;;
@@ -45,13 +53,13 @@ echo "ar = \"/usr/lib/emscripten-fastcomp/bin/llvm-ar\"" >> /.cargo/config.toml
 ;;
 "arm-unknown-linux-gnueabi") apk add --no-cache gcc-arm-none-eabi ;;
 *)
-echo "::error file=entrypoint.sh::${RUSTTARGET} is not supported" ;;
-# exit 1
+error "${RUSTTARGET} is not supported" ;;
+exit 1
 esac
 
 BINARY=$(cargo read-manifest | jq ".name" -r)
 
-echo "Building $BINARY..." >&2
+info "Building $BINARY..."
 
 if [ -x "./build.sh" ]; then
   OUTPUT=`./build.sh "${CMD_PATH}"`
@@ -61,7 +69,7 @@ else
   OUTPUT=$(find "target/${RUSTTARGET}/release/" -type f -name "${BINARY}*")
 fi
 
-echo "Saving $OUTPUT..." >&2
+info "Saving $OUTPUT..."
 
 mv $OUTPUT ./
 
