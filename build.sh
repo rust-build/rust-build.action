@@ -67,7 +67,7 @@ if [ -x "./build.sh" ]; then
 else
   rustup target add "$RUSTTARGET"
   OPENSSL_LIB_DIR=/usr/lib64 OPENSSL_INCLUDE_DIR=/usr/include/openssl cargo build --release --target "$RUSTTARGET" --bins
-  OUTPUT=$(find "target/${RUSTTARGET}/release/" -type f -name "${BINARY}*" -executable | tr "\n" " ")
+  OUTPUT=$(find "target/${RUSTTARGET}/release/" -type f -name "${BINARY}" "${BINARY}.*" -executable | tr "\n" " ")
 fi
 
 info "Saving $OUTPUT..."
