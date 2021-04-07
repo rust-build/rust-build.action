@@ -2,6 +2,8 @@
 
 Automate publishing Rust build artifacts for GitHub releases through GitHub Actions (Based on [go-release.action](https://github.com/ngs/go-release.action))
 
+For an example/template repo see [rust-build.test](https://github.com/rust-build/rust-build.test)
+
 Example
 ```yml
 # .github/workflows/release.yml
@@ -17,17 +19,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [x86_64-pc-windows-gnu, x86_64-unknown-linux-musl, x86_64-apple-darwin]
+        target: [x86_64-pc-windows-gnu, x86_64-unknown-linux-musl, x86_64-unknown-linux-gnu]
     steps:
       - uses: actions/checkout@master
       - name: Compile and release
-        uses: Douile/rust-build.action@v0.1.26
+        uses: rust-build/rust-build.action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUSTTARGET: ${{ matrix.target }}
           EXTRA_FILES: "README.md LICENSE"
 ```
-_Some target triples may not work_
+
+_Many target triples do not work, I am working on adding more support_
 
 Supported targets
 - `x86_64-pc-windows-gnu`
