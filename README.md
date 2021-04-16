@@ -36,6 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUSTTARGET: ${{ matrix.target }}
           EXTRA_FILES: "README.md LICENSE"
+          SRC_DIR: ./
 ```
 
 _Many target triples do not work, I am working on adding more support_
