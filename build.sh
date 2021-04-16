@@ -17,7 +17,9 @@ rmdir $PROJECT_ROOT
 ln -s $GITHUB_WORKSPACE $PROJECT_ROOT
 cd $PROJECT_ROOT
 
-if [ "" != "$SRC_DIR" ]; then
+if [ -z "${SRC_DIR+0}" ]; then
+  info "No SRC_DIR is set, using repo base dir"
+else
   info "Switching to src dir \"$SRC_DIR\""
   cd $SRC_DIR
 fi

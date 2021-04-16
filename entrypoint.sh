@@ -30,7 +30,9 @@ fi
 
 cd "$OUTPUT_DIR"
 
-FILE_LIST="${FILE_LIST} ${EXTRA_FILES}"
+if [ ! -z "${EXTRA_FILES+0}" ]; then
+  FILE_LIST="${FILE_LIST} ${EXTRA_FILES}"
+fi
 
 FILE_LIST=$(echo "${FILE_LIST}" | awk '{$1=$1};1')
 
