@@ -3,7 +3,6 @@
 set -eux
 
 if [ -z "${CMD_PATH+x}" ]; then
-  echo "::warning file=entrypoint.sh::CMD_PATH not set"
   export CMD_PATH=""
 fi
 
