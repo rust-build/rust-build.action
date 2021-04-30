@@ -52,24 +52,26 @@ exit 1
 ;;
 esac
 
-BINARY=$(cargo read-manifest | jq ".name" -r)
+BINARIES="$(cargo read-manifest | jq -r ".targets[] | select(.kind[] | contains(\"bin\")) | .name")"
 
-info "Building $BINARY..."
+for BINARY in $BINARIES; do
+  info "Building $BINARY..."
 
-if [ -x "./build.sh" ]; then
-  OUTPUT=`./build.sh "${CMD_PATH}" "${OUTPUT_DIR}"`
-else
-  rustup target add "$RUSTTARGET"
-  OPENSSL_LIB_DIR=/usr/lib64 OPENSSL_INCLUDE_DIR=/usr/include/openssl cargo build --release --target "$RUSTTARGET" --bins
-  OUTPUT=$(find "target/${RUSTTARGET}/release/" -maxdepth 1 -type f -executable \( -name "${BINARY}" -o -name "${BINARY}.*" \) | tr "\n" " ")
-fi
+  if [ -x "./build.sh" ]; then
+    OUTPUT=`./build.sh "${CMD_PATH}" "${OUTPUT_DIR}"`
+  else
+    rustup target add "$RUSTTARGET"
+    OPENSSL_LIB_DIR=/usr/lib64 OPENSSL_INCLUDE_DIR=/usr/include/openssl cargo build --release --target "$RUSTTARGET" --bin "$BINARY"
+    OUTPUT=$(find "target/${RUSTTARGET}/release/" -maxdepth 1 -type f -executable \( -name "${BINARY}" -o -name "${BINARY}.*" \) | tr "\n" " ")
+  fi
 
-info "Saving $OUTPUT..."
+  info "Saving $OUTPUT..."
 
-mv $OUTPUT "$OUTPUT_DIR" || error "Unable to copy binary"
+  mv $OUTPUT "$OUTPUT_DIR" || error "Unable to copy binary"
 
-OUTPUT_LIST=""
-for f in $OUTPUT; do
-  OUTPUT_LIST="$OUTPUT_LIST $(basename $f)"
+  OUTPUT_LIST=""
+  for f in $OUTPUT; do
+    OUTPUT_LIST="$OUTPUT_LIST $(basename $f)"
+  done
 done
 echo "$OUTPUT_LIST"
