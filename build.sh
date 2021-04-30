@@ -54,6 +54,7 @@ esac
 
 BINARIES="$(cargo read-manifest | jq -r ".targets[] | select(.kind[] | contains(\"bin\")) | .name")"
 
+OUTPUT_LIST=""
 for BINARY in $BINARIES; do
   info "Building $BINARY..."
 
@@ -70,7 +71,6 @@ for BINARY in $BINARIES; do
   # shellcheck disable=SC2086
   mv $OUTPUT "$OUTPUT_DIR" || error "Unable to copy binary"
 
-  OUTPUT_LIST=""
   for f in $OUTPUT; do
     OUTPUT_LIST="$OUTPUT_LIST $(basename "$f")"
   done
