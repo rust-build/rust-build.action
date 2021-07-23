@@ -26,7 +26,7 @@ fi
 
 info "Installing additional linkers"
 case ${RUSTTARGET} in
-"x86_64-pc-windows-gnu") apk add --no-cache mingw-w64-gcc ;;
+"x86_64-pc-windows-gnu") ;;
 
 "x86_64-unknown-linux-musl") ;;
 
@@ -37,12 +37,20 @@ exit 1
 
 "wasm32-wasi") ;;
 "wasm32-unknown-emscripten") 
-apk add --no-cache emscripten-fastcomp
 mkdir -p /.cargo
 cat > /.cargo/config.toml << EOF
 [target.wasm32-unknown-emscripten]
 linker = "/usr/lib/emscripten-fastcomp/bin/clang"
 ar = "/usr/lib/emscripten-fastcomp/bin/llvm-ar"
+EOF
+;;
+
+"x86_64-apple-darwin")
+mkdir -p /.cargo
+cat > /.cargo/config.toml << EOF
+[target.x86_64-apple-darwin]
+linker = "/opt/osxcross/target/bin/x86_64-apple-darwin14-clang"
+ar = "/opt/osxcross/target/bin/x86_64-apple-darwin14-ar"
 EOF
 ;;
 
