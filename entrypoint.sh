@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eux
+set -eu
 
 if [ -z "${CMD_PATH+x}" ]; then
   export CMD_PATH=""

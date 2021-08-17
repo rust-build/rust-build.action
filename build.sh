@@ -8,7 +8,7 @@ error() {
   echo "::error file=entrypoint.sh:: $*" >&2
 }
 
-set -eux
+set -eu
 PROJECT_ROOT="/rust/build/${GITHUB_REPOSITORY}"
 OUTPUT_DIR="$1"
 
