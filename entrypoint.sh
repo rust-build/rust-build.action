@@ -10,6 +10,9 @@ OUTPUT_DIR="/output"
 mkdir -p "$OUTPUT_DIR"
 
 FILE_LIST=$(/build.sh "$OUTPUT_DIR")
+if [ -n "$?" ]; then
+  exit 1
+fi
 
 EVENT_DATA=$(cat "$GITHUB_EVENT_PATH")
 echo "$EVENT_DATA" | jq .
