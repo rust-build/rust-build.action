@@ -1,9 +1,13 @@
 on:
   push:
-    branch:
-      - master
+    paths:
+      - '**.sh'
+  pull_request:
+    paths:
+      - '**.sh'
 
-name: 'Push: shellcheck'
+
+name: 'Shellcheck'
 
 jobs:
   shellcheck:
