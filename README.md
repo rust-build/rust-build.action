@@ -43,5 +43,4 @@ _Many target triples do not work, I am working on adding more support_
 ## Supported targets
 - `x86_64-pc-windows-gnu`
 - `x86_64-unknown-linux-musl`
-- `x86_64-apple-darwin`
 - `wasm32-wasi` 
