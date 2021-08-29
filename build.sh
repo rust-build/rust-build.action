@@ -5,7 +5,7 @@ info() {
 }
 
 error() {
-  echo "::error file=entrypoint.sh:: $*" >&2
+  echo "::error file=build.sh:: $*" >&2
 }
 
 set -eu -o pipefail
