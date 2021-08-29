@@ -11,13 +11,17 @@ mkdir -p "$OUTPUT_DIR"
 
 
 if ! FILE_LIST=$(/build.sh "$OUTPUT_DIR"); then
-  echo "::error file=entrypoint.sh::Build failed"
+  echo "::error file=entrypoint.sh::Build failed" >&2
   exit 1
 fi
 
 EVENT_DATA=$(cat "$GITHUB_EVENT_PATH")
 echo "$EVENT_DATA" | jq .
 UPLOAD_URL=$(echo "$EVENT_DATA" | jq -r .release.upload_url)
+if [ "$UPLOAD_URL" = "null" ]; then
+  echo "::error file=entrypoint.sh::The event provided did not contain an upload URL, this workflow can only be used with the release event." >&2
+  exit 1
+fi
 UPLOAD_URL=${UPLOAD_URL/\{?name,label\}/}
 RELEASE_NAME=$(echo "$EVENT_DATA" | jq -r .release.tag_name)
 PROJECT_NAME=$(basename "$GITHUB_REPOSITORY")
