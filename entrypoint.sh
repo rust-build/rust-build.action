@@ -10,7 +10,7 @@ OUTPUT_DIR="/output"
 mkdir -p "$OUTPUT_DIR"
 
 FILE_LIST=$(/build.sh "$OUTPUT_DIR")
-if [ -n "$?" ]; then
+if [ "$?" -ne 0 ]; then
   exit 1
 fi
 
