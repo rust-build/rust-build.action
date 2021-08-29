@@ -9,8 +9,9 @@ fi
 OUTPUT_DIR="/output"
 mkdir -p "$OUTPUT_DIR"
 
-FILE_LIST=$(/build.sh "$OUTPUT_DIR")
-if [ "$?" -ne 0 ]; then
+
+if ! FILE_LIST=$(/build.sh "$OUTPUT_DIR"); then
+  echo "::error file=entrypoint.sh::Build failed"
   exit 1
 fi
 
@@ -39,7 +40,7 @@ fi
 FILE_LIST=$(echo "${FILE_LIST}" | awk '{$1=$1};1')
 
 ARCHIVE="tmp.zip"
-echo "::info Packing files: $FILE_LIST"
+echo "::info::Packing files: $FILE_LIST"
 # shellcheck disable=SC2086
 zip -9r $ARCHIVE ${FILE_LIST}
 

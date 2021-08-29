@@ -8,7 +8,14 @@ error() {
   echo "::error file=entrypoint.sh:: $*" >&2
 }
 
-set -eu
+set -eu -o pipefail
+
+crash() {
+  error "Command exited with non-zero exit code"
+  exit 1
+}
+
+trap 'crash' ERR
 PROJECT_ROOT="/rust/build/${GITHUB_REPOSITORY}"
 OUTPUT_DIR="$1"
 
@@ -74,8 +81,11 @@ for BINARY in $BINARIES; do
     OUTPUT=$(find "target/${RUSTTARGET}/release/" -maxdepth 1 -type f -executable \( -name "${BINARY}" -o -name "${BINARY}.*" \) -print0 | xargs -0)
   fi
 
-  if [ -z "$OUTPUT" ]; then
+  info "$OUTPUT"
+
+  if [ "$OUTPUT" = "" ]; then
     error "Unable to find output"
+    exit 1
   fi
 
   info "Saving $OUTPUT..."
