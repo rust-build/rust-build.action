@@ -4,6 +4,8 @@ Automate publishing Rust build artifacts for GitHub releases through GitHub Acti
 
 For an example/template repo see [rust-build.test](https://github.com/rust-build/rust-build.test)
 
+This action will only work when you release a project as it uploads the artifacts to the release.
+
 ## Environment variables
 ```bash
 GITHUB_TOKEN  # Must be set to ${{ secrets.GITHUB_TOKEN }} - Allows uploading of artifacts to release
@@ -44,3 +46,4 @@ _Many target triples do not work, I am working on adding more support_
 - `x86_64-pc-windows-gnu`
 - `x86_64-unknown-linux-musl`
 - `wasm32-wasi` 
+- `x86_64-apple-darwin`
