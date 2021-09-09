@@ -12,6 +12,9 @@ inputs:
   SRC_DIR:
     description: 'Path to directory containing Cargo.toml (defaults to project root)'
     required: false
+  ARCHIVE_TYPES:
+    description: 'List of archive types to publish the binaries with, default "zip", supports zip and all tar formats'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
