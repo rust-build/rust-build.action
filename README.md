@@ -10,8 +10,9 @@ This action will only work when you release a project as it uploads the artifact
 ```bash
 GITHUB_TOKEN  # Must be set to ${{ secrets.GITHUB_TOKEN }} - Allows uploading of artifacts to release
 RUSTTARGET    # The rust target triple, see README for supported triples
-EXTRA_FILES   # Space seperated list of extra files to include in final output
+EXTRA_FILES   # Space separated list of extra files to include in final output
 SRC_DIR       # Relative path to the src dir (directory with Cargo.toml in) from root of project
+ARCHIVE_TYPES # Type(s) of archive(s) to create, e.g. "zip" (default) or "zip tar.gz"; supports: (zip, tar[.gz|.bz2|.xz])
 ```
 
 ## Example
