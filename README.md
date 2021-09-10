@@ -15,7 +15,9 @@ SRC_DIR       # Relative path to the src dir (directory with Cargo.toml in) from
 ARCHIVE_TYPES # Type(s) of archive(s) to create, e.g. "zip" (default) or "zip tar.gz"; supports: (zip, tar[.gz|.bz2|.xz])
 ```
 
-## Example
+## Examples
+
+### Build windows and linux and upload as zip
 ```yml
 # .github/workflows/release.yml
 
@@ -39,6 +41,39 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RUSTTARGET: ${{ matrix.target }}
           EXTRA_FILES: "README.md LICENSE"
+```
+
+### Build windows, linux and mac with native zip types
+Will build native binaries for windows, linux and mac. Windows will upload as zip, linux as .tar.gz and .tar.xz, mac as .zip.
+```yml
+# .github/workflows/release.yml
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  release:
+    name: release ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-pc-windows-gnu
+            archive: zip
+          - target: x86_64-unknown-linux-musl
+            archive: tar.gz tar.xz
+          - target: x86_64-apple-darwin
+            archive: zip
+    steps:
+      - uses: actions/checkout@master
+      - name: Compile and release
+        uses: rust-build/rust-build.action@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUSTTARGET: ${{ matrix.target }}
+          ARCHIVE_TYPES: ${{ matrix.archive }}
 ```
 
 _Many target triples do not work, I am working on adding more support_
