@@ -9,10 +9,18 @@ fi
 OUTPUT_DIR="/output"
 mkdir -p "$OUTPUT_DIR"
 
+PRE_BUILD="${PRE_BUILD:-""}"
+POST_BUILD="${POST_BUILD:-""}"
 
+if [ -f "./$PRE_BUILD" ]; then
+  "./$PRE_BUILD"
+fi
 if ! FILE_LIST=$(/build.sh "$OUTPUT_DIR"); then
   echo "::error file=entrypoint.sh::Build failed" >&2
   exit 1
+fi
+if [ -f "./$POST_BUILD" ]; then
+  "./$POST_BUILD"
 fi
 
 EVENT_DATA=$(cat "$GITHUB_EVENT_PATH")
