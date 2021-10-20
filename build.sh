@@ -16,7 +16,6 @@ crash() {
 }
 
 trap 'crash' ERR
-PROJECT_ROOT="/rust/build/${GITHUB_REPOSITORY}"
 OUTPUT_DIR="$1"
 
 if [ -z "${SRC_DIR+0}" ]; then
