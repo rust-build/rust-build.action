@@ -9,17 +9,26 @@ fi
 OUTPUT_DIR="/output"
 mkdir -p "$OUTPUT_DIR"
 
+# Link repo
+PROJECT_ROOT="/rust/build/${GITHUB_REPOSITORY}"
+mkdir -p "$PROJECT_ROOT"
+rmdir "$PROJECT_ROOT"
+ln -s "$GITHUB_WORKSPACE" "$PROJECT_ROOT"
+cd "$PROJECT_ROOT"
+
 PRE_BUILD="${PRE_BUILD:-""}"
 POST_BUILD="${POST_BUILD:-""}"
-
-if [ -f "./$PRE_BUILD" ]; then
+# Run pre-build script
+if [ -f "$PRE_BUILD" ]; then
   "./$PRE_BUILD"
 fi
+# Build
 if ! FILE_LIST=$(/build.sh "$OUTPUT_DIR"); then
   echo "::error file=entrypoint.sh::Build failed" >&2
   exit 1
 fi
-if [ -f "./$POST_BUILD" ]; then
+# Run post-build script
+if [ -f "$POST_BUILD" ]; then
   "./$POST_BUILD"
 fi
 

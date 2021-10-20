@@ -19,11 +19,6 @@ trap 'crash' ERR
 PROJECT_ROOT="/rust/build/${GITHUB_REPOSITORY}"
 OUTPUT_DIR="$1"
 
-mkdir -p "$PROJECT_ROOT"
-rmdir "$PROJECT_ROOT"
-ln -s "$GITHUB_WORKSPACE" "$PROJECT_ROOT"
-cd "$PROJECT_ROOT"
-
 if [ -z "${SRC_DIR+0}" ]; then
   info "No SRC_DIR is set, using repo base dir"
 else
