@@ -15,6 +15,12 @@ inputs:
   ARCHIVE_TYPES:
     description: 'List of archive types to publish the binaries with, default "zip", supports zip and all tar formats'
     required: false
+  PRE_BUILD:
+    description: 'Relative path of script to run before building'
+    required: false
+  POST_BUILD:
+    description: 'Relative path of script to run after building'
+    required: false
 runs:
   using: 'docker'
   image: 'docker://ghcr.io/rust-build/rust-build.action:latest'
