@@ -1,4 +1,4 @@
-FROM rust:1.55-alpine
+FROM rust:1.56-alpine
 MAINTAINER Douile <25043847+Douile@users.noreply.github.com>
 
 LABEL "com.github.actions.name"="Rust Release binary"
