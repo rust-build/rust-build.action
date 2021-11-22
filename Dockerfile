@@ -1,11 +1,11 @@
-FROM rust:1.55-alpine
+FROM rust:1.56-alpine
 MAINTAINER Douile <25043847+Douile@users.noreply.github.com>
 
 LABEL "com.github.actions.name"="Rust Release binary"
 LABEL "com.github.actions.description"="Automate publishing Rust build artifacts for GitHub releases through GitHub Actions"
 
 LABEL "name"="Automate publishing Rust build artifacts for GitHub releases through GitHub Actions"
-LABEL "version"="1.2.1"
+LABEL "version"="1.2.2"
 LABEL "repository"="http://github.com/Douile/rust-release.action"
 LABEL "maintainer"="Douile <25043847+Douile@users.noreply.github.com>"
 
