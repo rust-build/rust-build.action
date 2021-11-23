@@ -81,6 +81,12 @@ for BINARY in $BINARIES; do
     error "Unable to find output"
     exit 1
   fi
+  
+  if [ "$MINIFY" = "true" ]; then
+    info "Minifying ${OUTPUT}..."
+    strip $OUTPUT
+    upx $OUTPUT
+  fi
 
   info "Saving $OUTPUT..."
 
