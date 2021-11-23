@@ -84,8 +84,8 @@ for BINARY in $BINARIES; do
   
   if [ "$MINIFY" = "true" ]; then
     info "Minifying ${OUTPUT}..."
-    strip $OUTPUT
-    upx $OUTPUT
+    strip "${OUTPUT}"
+    upx "${OUTPUT}"
   fi
 
   info "Saving $OUTPUT..."
