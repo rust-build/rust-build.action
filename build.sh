@@ -82,6 +82,8 @@ for BINARY in $BINARIES; do
     exit 1
   fi
   
+  # MINIFY set to false by default
+  MINIFY=${MINIFY:-"false"}
   if [ "$MINIFY" = "true" ]; then
     info "Minifying ${OUTPUT}..."
     strip "${OUTPUT}"
