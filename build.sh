@@ -86,8 +86,24 @@ for BINARY in $BINARIES; do
   MINIFY=${MINIFY:-"false"}
   if [ "$MINIFY" = "true" ]; then
     info "Minifying ${OUTPUT}..."
+    
+    info "Stripping..."
     strip "${OUTPUT}"
+    RESULT=$?
+    if [ $RESULT -eq 0 ]; then
+      info "File stripped successfully."
+    else
+      info "Strip failed. Return code ${RESULT}"
+    fi
+    
+    info "Compressing using UPX..."
     upx "${OUTPUT}"
+    RESULT=$?
+    if [ $RESULT -eq 0 ]; then
+      info "File compressed successfully."
+    else
+      info "Compression failed. Return code ${RESULT}"
+    fi
   fi
 
   info "Saving $OUTPUT..."
