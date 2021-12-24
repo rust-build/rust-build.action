@@ -88,22 +88,12 @@ for BINARY in $BINARIES; do
     info "Minifying ${OUTPUT}..."
     
     info "Stripping..."
-    strip "${OUTPUT}"
-    RESULT=$?
-    if [ $RESULT -eq 0 ]; then
-      info "File stripped successfully."
-    else
-      info "Strip failed. Return code ${RESULT}"
-    fi
-    
+    strip "${OUTPUT}" || info "Strip failed."
+    info "File stripped successfully."
+
     info "Compressing using UPX..."
-    upx "${OUTPUT}"
-    RESULT=$?
-    if [ $RESULT -eq 0 ]; then
-      info "File compressed successfully."
-    else
-      info "Compression failed. Return code ${RESULT}"
-    fi
+    upx "${OUTPUT}" || info "Compression failed."
+    info "File compressed successfully."
   fi
 
   info "Saving $OUTPUT..."
