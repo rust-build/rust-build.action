@@ -83,19 +83,19 @@ for ARCHIVE_TYPE in $ARCHIVE_TYPES; do
   esac
 
   CHECKSUM=$(sha256sum "${ARCHIVE}" | cut -d ' ' -f 1)
-  CHECKSUM_NAME="${NAME}.${ARCHIVE/tmp./}.sha256sum"
+  FILE_NAME="${NAME}.${ARCHIVE/tmp./}"
 
   curl \
     -X POST \
     --data-binary @"${ARCHIVE}" \
     -H 'Content-Type: application/octet-stream' \
     -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-    "${UPLOAD_URL}?name=${NAME}.${ARCHIVE/tmp./}"
+    "${UPLOAD_URL}?name=${FILE_NAME}"
 
   curl \
     -X POST \
-    --data "$CHECKSUM ${CHECKSUM_NAME}" \
+    --data "$CHECKSUM ${FILE_NAME}" \
     -H 'Content-Type: text/plain' \
     -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-    "${UPLOAD_URL}?name=${CHECKSUM_NAME}"
+    "${UPLOAD_URL}?name=${FILE_NAME}.sha256sum"
 done
