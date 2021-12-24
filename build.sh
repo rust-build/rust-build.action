@@ -83,6 +83,20 @@ for BINARY in $BINARIES; do
     error "Unable to find output"
     exit 1
   fi
+  
+  # MINIFY set to false by default
+  MINIFY=${MINIFY:-"false"}
+  if [ "$MINIFY" = "true" ]; then
+    info "Minifying ${OUTPUT}..."
+    
+    info "Stripping..."
+    strip "${OUTPUT}" >&2 || info "Strip failed."
+    info "File stripped successfully."
+
+    info "Compressing using UPX..."
+    upx "${OUTPUT}" >&2 || info "Compression failed."
+    info "File compressed successfully."
+  fi
 
   info "Saving $OUTPUT..."
 

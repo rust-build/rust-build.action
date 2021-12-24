@@ -10,7 +10,7 @@ LABEL "repository"="http://github.com/Douile/rust-release.action"
 LABEL "maintainer"="Douile <25043847+Douile@users.noreply.github.com>"
 
 # Add regular dependencies
-RUN apk add --no-cache curl jq git build-base bash zip
+RUN apk add --no-cache curl jq git build-base bash zip upx
 
 # Add windows dependencies
 RUN apk add --no-cache mingw-w64-gcc
