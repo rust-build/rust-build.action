@@ -88,11 +88,11 @@ for BINARY in $BINARIES; do
     info "Minifying ${OUTPUT}..."
     
     info "Stripping..."
-    strip "${OUTPUT}" || info "Strip failed."
+    strip "${OUTPUT}" >&2 || info "Strip failed."
     info "File stripped successfully."
 
     info "Compressing using UPX..."
-    upx "${OUTPUT}" || info "Compression failed."
+    upx "${OUTPUT}" >&2 || info "Compression failed."
     info "File compressed successfully."
   fi
 
