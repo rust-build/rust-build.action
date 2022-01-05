@@ -50,7 +50,7 @@ if [ -z "${EXTRA_FILES+x}" ]; then
   echo "::warning file=entrypoint.sh::EXTRA_FILES not set"
 else
   for file in $(echo -n "${EXTRA_FILES}" | tr " " "\n"); do
-    cp "$file" "$OUTPUT_DIR"
+    cp --parents "$file" "$OUTPUT_DIR"
   done
 fi
 
