@@ -6,7 +6,7 @@ LABEL "com.github.actions.description"="Automate publishing Rust build artifacts
 
 LABEL "name"="Automate publishing Rust build artifacts for GitHub releases through GitHub Actions"
 LABEL "version"="1.2.5"
-LABEL "repository"="http://github.com/Douile/rust-release.action"
+LABEL "repository"="http://github.com/rust-build/rust-build.action"
 LABEL "maintainer"="Douile <25043847+Douile@users.noreply.github.com>"
 
 # Add regular dependencies
