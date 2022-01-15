@@ -23,4 +23,4 @@ inputs:
     required: false
 runs:
   using: 'docker'
-  image: 'docker://ghcr.io/rust-build/rust-build.action:latest'
+  image: 'docker://ghcr.io/rust-build/rust-build.action:v1.2.5'
