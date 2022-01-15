@@ -49,6 +49,8 @@ EOF
 "x86_64-apple-darwin")
 export CC=/opt/osxcross/target/bin/o64-clang
 export CXX=/opt/osxcross/target/bin/o64-clang++
+export PATH="/opt/osxcross/target/bin:$PATH"
+export LIBZ_SYS_STATIC=1
 mkdir -p /.cargo
 cat > /.cargo/config.toml << EOF
 [target.x86_64-apple-darwin]
