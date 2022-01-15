@@ -1,5 +1,7 @@
 # Rust Release Binary Github Action
 
+[![.github/workflows/build.yml](https://github.com/rust-build/rust-build.test/actions/workflows/build.yml/badge.svg)](https://github.com/rust-build/rust-build.test/actions/workflows/build.yml)
+
 Automate publishing Rust build artifacts for GitHub releases through GitHub Actions (Based on [go-release.action](https://github.com/ngs/go-release.action))
 
 For an example/template repo see [rust-build.test](https://github.com/rust-build/rust-build.test)

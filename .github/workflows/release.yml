@@ -35,3 +35,16 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  test:
+    name: Test the build works
+    needs: containerize
+    steps:
+      - name: Create release
+        uses: actions/create-release@v1
+        with:
+          owner: rust-build
+          repo: rust-build.test
+          tag_name: ${{ env.GITHUB_REF_NAME }}
+          release_name: ${{ env.GITHUB_REF_NAME }}
+
+
