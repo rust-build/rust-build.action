@@ -68,9 +68,9 @@ esac
 info "Setting up toolchain"
 TOOLCHAIN_VERSION="${TOOLCHAIN_VERSION:-""}"
 if [ "$TOOLCHAIN_VERSION" != "" ]; then
-  rustup default "$TOOLCHAIN_VERSION"
+  rustup default "$TOOLCHAIN_VERSION" >&2
 fi
-rustup target add "$RUSTTARGET"
+rustup target add "$RUSTTARGET" >&2
 
 
 BINARIES="$(cargo read-manifest | jq -r ".targets[] | select(.kind[] | contains(\"bin\")) | .name")"
@@ -82,7 +82,7 @@ for BINARY in $BINARIES; do
   if [ -x "./build.sh" ]; then
     OUTPUT=$(./build.sh "${CMD_PATH}" "${OUTPUT_DIR}")
   else
-    OPENSSL_LIB_DIR=/usr/lib OPENSSL_INCLUDE_DIR=/usr/include/openssl CARGO_TARGET_DIR="./target" cargo build --release --target "$RUSTTARGET" --bin "$BINARY"
+    OPENSSL_LIB_DIR=/usr/lib OPENSSL_INCLUDE_DIR=/usr/include/openssl CARGO_TARGET_DIR="./target" cargo build --release --target "$RUSTTARGET" --bin "$BINARY" >&2
     OUTPUT=$(find "target/${RUSTTARGET}/release/" -maxdepth 1 -type f -executable \( -name "${BINARY}" -o -name "${BINARY}.*" \) -print0 | xargs -0)
   fi
 
