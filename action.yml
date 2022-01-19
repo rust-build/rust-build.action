@@ -21,6 +21,9 @@ inputs:
   POST_BUILD:
     description: 'Relative path of script to run after building'
     required: false
+  TOOLCHAIN_VERSION:
+    description: "The rust toolchain version to use (see https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification)"
+    required: false
 runs:
   using: 'docker'
   image: 'docker://ghcr.io/rust-build/rust-build.action:v1.2.5'

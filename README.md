@@ -10,14 +10,15 @@ This action will only work when you release a project as it uploads the artifact
 
 ## Environment variables
 ```bash
-GITHUB_TOKEN  # Must be set to ${{ secrets.GITHUB_TOKEN }} - Allows uploading of artifacts to release
-RUSTTARGET    # The rust target triple, see README for supported triples
-EXTRA_FILES   # Space separated list of extra files to include in final output
-SRC_DIR       # Relative path to the src dir (directory with Cargo.toml in) from root of project
-ARCHIVE_TYPES # Type(s) of archive(s) to create, e.g. "zip" (default) or "zip tar.gz"; supports: (zip, tar[.gz|.bz2|.xz])
-PRE_BUILD     # Path to script to run before build e.g. "pre.sh"
-POST_BUILD    # Path to script to run after build e.g. "post.sh"
-MINIFY        # If set to "true", the resulting binary will be stripped and compressed by UPX. ("false" by default)
+GITHUB_TOKEN      # Must be set to ${{ secrets.GITHUB_TOKEN }} - Allows uploading of artifacts to release
+RUSTTARGET        # The rust target triple, see README for supported triples
+EXTRA_FILES       # Space separated list of extra files to include in final output
+SRC_DIR           # Relative path to the src dir (directory with Cargo.toml in) from root of project
+ARCHIVE_TYPES     # Type(s) of archive(s) to create, e.g. "zip" (default) or "zip tar.gz"; supports: (zip, tar[.gz|.bz2|.xz])
+PRE_BUILD         # Path to script to run before build e.g. "pre.sh"
+POST_BUILD        # Path to script to run after build e.g. "post.sh"
+MINIFY            # If set to "true", the resulting binary will be stripped and compressed by UPX. ("false" by default)
+TOOLCHAIN_VERSION # The rust toolchain version to use (see https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification)
 ```
 
 ## Examples
