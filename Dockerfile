@@ -5,7 +5,7 @@ LABEL "com.github.actions.name"="Rust Release binary"
 LABEL "com.github.actions.description"="Automate publishing Rust build artifacts for GitHub releases through GitHub Actions"
 
 LABEL "name"="Automate publishing Rust build artifacts for GitHub releases through GitHub Actions"
-LABEL "version"="1.2.5"
+LABEL "version"="1.2.6"
 LABEL "repository"="http://github.com/rust-build/rust-build.action"
 LABEL "maintainer"="Douile <25043847+Douile@users.noreply.github.com>"
 
