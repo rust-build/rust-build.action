@@ -38,6 +38,7 @@ jobs:
   test:
     name: Test the build works
     needs: containerize
+    runs-on: ubuntu-20.04
     steps:
       - name: Create release
         uses: actions/create-release@v1
