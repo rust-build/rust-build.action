@@ -15,6 +15,7 @@ RUSTTARGET        # The rust target triple, see README for supported triples
 EXTRA_FILES       # Space separated list of extra files to include in final output
 SRC_DIR           # Relative path to the src dir (directory with Cargo.toml in) from root of project
 ARCHIVE_TYPES     # Type(s) of archive(s) to create, e.g. "zip" (default) or "zip tar.gz"; supports: (zip, tar[.gz|.bz2|.xz])
+ARCHIVE_NAME      # Full name of archive to upload (you must specify file extension and change this if building multiple targets)
 PRE_BUILD         # Path to script to run before build e.g. "pre.sh"
 POST_BUILD        # Path to script to run after build e.g. "post.sh"
 MINIFY            # If set to "true", the resulting binary will be stripped and compressed by UPX. ("false" by default)
