@@ -46,7 +46,7 @@ NAME="${ARCHIVE_NAME:-${PROJECT_NAME}_${RELEASE_NAME}_${RUSTTARGET}}"
 ARCHIVE_TYPES="${ARCHIVE_TYPES:-"zip"}"
 EXTRA_FILES="${EXTRA_FILES:-""}"
 
-if [ -z "${EXTRA_FILES+x}" ]; then
+if [ -z "${EXTRA_FILES+Sx}" ]; then
   echo "::warning file=entrypoint.sh::EXTRA_FILES not set"
 else
   for file in $(echo -n "${EXTRA_FILES}" | tr " " "\n"); do
@@ -86,6 +86,7 @@ for ARCHIVE_TYPE in $ARCHIVE_TYPES; do
   FILE_NAME="${NAME}.${ARCHIVE/tmp./}"
 
   curl \
+    --fail-with-body -sS \
     -X POST \
     --data-binary @"${ARCHIVE}" \
     -H 'Content-Type: application/octet-stream' \
@@ -93,6 +94,7 @@ for ARCHIVE_TYPE in $ARCHIVE_TYPES; do
     "${UPLOAD_URL}?name=${FILE_NAME}"
 
   curl \
+    --fail-with-body -sS \
     -X POST \
     --data "$CHECKSUM ${FILE_NAME}" \
     -H 'Content-Type: text/plain' \
