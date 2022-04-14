@@ -46,7 +46,7 @@ NAME="${ARCHIVE_NAME:-${PROJECT_NAME}_${RELEASE_NAME}_${RUSTTARGET}}"
 ARCHIVE_TYPES="${ARCHIVE_TYPES:-"zip"}"
 EXTRA_FILES="${EXTRA_FILES:-""}"
 
-if [ -z "${EXTRA_FILES+Sx}" ]; then
+if [ -z "${EXTRA_FILES+x}" ]; then
   echo "::warning file=entrypoint.sh::EXTRA_FILES not set"
 else
   for file in $(echo -n "${EXTRA_FILES}" | tr " " "\n"); do
