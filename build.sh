@@ -1,7 +1,7 @@
 #!/bin/bash
 
 info() {
-  echo "::info $*" >&2
+  echo "::info:: $*" >&2
 }
 
 error() {

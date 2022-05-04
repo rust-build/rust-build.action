@@ -6,13 +6,13 @@ set_output() {
   echo "::set-output name=$1::$2"
 }
 info() {
-  echo "::info::$1"
+  echo "::info::$*"
 }
 warn() {
-  echo "::warning file=entrypoint.sh::$1"
+  echo "::warning file=entrypoint.sh::$*"
 }
 error() {
-  echo "::error file=entrypoint.sh::$1"
+  echo "::error file=entrypoint.sh::$*"
 }
 
 # For backwards compatible also accept environment variable names, but parse all inputs in github
