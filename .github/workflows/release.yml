@@ -41,13 +41,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Create release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          owner: rust-build
-          repo: rust-build.test
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-
-
+          token: ${{ secrets.RELEASE_TOKEN }}
+          repository: rust-build/rust-build.test
