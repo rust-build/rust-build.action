@@ -2,6 +2,8 @@ FROM rust:1.60-alpine
 
 LABEL "com.github.actions.name"="Rust Release binary"
 LABEL "com.github.actions.description"="Automate publishing Rust build artifacts for GitHub releases through GitHub Actions"
+LABEL "com.github.actions.icon"="box"
+LABEL "com.github.actions.color"="orange"
 
 LABEL "name"="Automate publishing Rust build artifacts for GitHub releases through GitHub Actions"
 LABEL "version"="1.3.0"
