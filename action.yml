@@ -1,7 +1,8 @@
 name: 'Rust Release binary'
 description: 'Automate publishing Rust build artifacts for GitHub releases through GitHub Actions'
-icon: 'box'
-color: 'orange'
+branding:
+  icon: 'box'
+  color: 'orange'
 inputs:
   RUSTTARGET:
     description: 'Output target'
