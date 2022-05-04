@@ -1,7 +1,7 @@
 FROM rust:1.60-alpine
 
 LABEL "name"="Automate publishing Rust build artifacts for GitHub releases through GitHub Actions"
-LABEL "version"="1.3.1"
+LABEL "version"="1.3.2"
 LABEL "repository"="http://github.com/rust-build/rust-build.action"
 LABEL "maintainer"="Douile <25043847+Douile@users.noreply.github.com>"
 

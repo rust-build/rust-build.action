@@ -45,7 +45,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Compile and release
-        uses: rust-build/rust-build.action@v1.3.1
+        uses: rust-build/rust-build.action@v1.3.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -79,7 +79,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Compile and release
-        uses: rust-build/rust-build.action@v1.3.1
+        uses: rust-build/rust-build.action@v1.3.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -104,7 +104,7 @@ jobs:
       - uses: actions/checkout@master
       - name: Compile
         id: compile
-        uses: rust-build/rust-build.action@v1.3.1
+        uses: rust-build/rust-build.action@v1.3.2
         with:
           RUSTTARGET: x86_64-unknown-linux-musl
           UPLOAD_MODE: none
