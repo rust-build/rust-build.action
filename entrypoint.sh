@@ -32,7 +32,7 @@ if [ -z "${CMD_PATH+x}" ]; then
   export CMD_PATH=""
 fi
 
-OUTPUT_DIR="/github/workflow/output"
+OUTPUT_DIR="/github/workspace/output"
 mkdir -p "$OUTPUT_DIR"
 
 # Link repo
