@@ -1,5 +1,4 @@
 FROM rust:1.59-alpine
-MAINTAINER Douile <25043847+Douile@users.noreply.github.com>
 
 LABEL "com.github.actions.name"="Rust Release binary"
 LABEL "com.github.actions.description"="Automate publishing Rust build artifacts for GitHub releases through GitHub Actions"

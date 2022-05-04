@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set -eu
 
@@ -6,28 +6,27 @@ set_output() {
   echo "::set-output name=$1::$2"
 }
 info() {
-  echo "::info::$@"
+  echo "::info::$1"
 }
 warn() {
-  echo "::warning file=entrypoint.sh::$@"
+  echo "::warning file=entrypoint.sh::$1"
 }
 error() {
-  echo "::error file=entrypoint.sh::$@"
+  echo "::error file=entrypoint.sh::$1"
 }
 
 # For backwards compatible also accept environment variable names, but parse all inputs in github
 # action format
-export RUSTTARGET="${INPUT_RUSTTARGET:-$RUSTTARGET}"
-EXTRA_FILES="${INPUT_EXTRA_FILES:-$EXTRA_FILES}"
+export RUSTTARGET="${INPUT_RUSTTARGET:-${RUSTTARGET:-}}"
+EXTRA_FILES="${INPUT_EXTRA_FILES:-${EXTRA_FILES:-}}"
 # SRC_DIR is handled in build.sh
-ARCHIVE_TYPES="${INPUT_ARCHIVE_TYPES:-$ARCHIVE_TYPES}"
-ARCHIVE_NAME="${INPUT_ARCHIVE_NAME:-$ARCHIVE_NAME}"
-PRE_BUILD="${INPUT_PRE_BUILD:-$PRE_BUILD}"
-POST_BUILD="${INPUT_POST_BUILD:-$POST_BUILD}"
-export MINIFY="${INPUT_MINIFY:-$MINIFY}"
-export TOOLCHAIN_VERSION="${INPUT_TOOLCHAIN_VERSION:-$TOOLCHAIN_VERSION}"
-UPLOAD_MODE="${INPUT_UPLOAD_MODE:-$UPLOAD_MODE}"
-UPLOAD_MODE="${UPLOAD_MODE:-release}"
+ARCHIVE_TYPES="${INPUT_ARCHIVE_TYPES:-${ARCHIVE_TYPES:-}}"
+ARCHIVE_NAME="${INPUT_ARCHIVE_NAME:-${ARCHIVE_NAME:-}}"
+PRE_BUILD="${INPUT_PRE_BUILD:-${PRE_BUILD:-}}"
+POST_BUILD="${INPUT_POST_BUILD:-${POST_BUILD:-}}"
+export MINIFY="${INPUT_MINIFY:-${MINIFY:-}}"
+export TOOLCHAIN_VERSION="${INPUT_TOOLCHAIN_VERSION:-${TOOLCHAIN_VERSION:-}}"
+UPLOAD_MODE="${INPUT_UPLOAD_MODE:-${UPLOAD_MODE:-release}}"
 
 if [ -z "${CMD_PATH+x}" ]; then
   export CMD_PATH=""
@@ -43,8 +42,6 @@ rmdir "$PROJECT_ROOT"
 ln -s "$GITHUB_WORKSPACE" "$PROJECT_ROOT"
 cd "$PROJECT_ROOT"
 
-PRE_BUILD="${PRE_BUILD:-""}"
-POST_BUILD="${POST_BUILD:-""}"
 # Run pre-build script
 if [ -f "$PRE_BUILD" ]; then
   "./$PRE_BUILD"
@@ -74,7 +71,7 @@ ARCHIVE_TYPES="${ARCHIVE_TYPES:-"zip"}"
 EXTRA_FILES="${EXTRA_FILES:-""}"
 
 if [ -z "${EXTRA_FILES+x}" ]; then
-  echo "::warning file=entrypoint.sh::EXTRA_FILES not set"
+  warn "EXTRA_FILES not set"
 else
   for file in $(echo -n "${EXTRA_FILES}" | tr " " "\n"); do
     cp --parents "$file" "$OUTPUT_DIR"
@@ -89,7 +86,7 @@ fi
 
 FILE_LIST=$(echo "${FILE_LIST}" | awk '{$1=$1};1')
 
-echo "::info::Packing files: $FILE_LIST"
+info "Packing files: $FILE_LIST"
 
 for ARCHIVE_TYPE in $ARCHIVE_TYPES; do
   ARCHIVE="tmp.${ARCHIVE_TYPE}"
@@ -105,13 +102,14 @@ for ARCHIVE_TYPE in $ARCHIVE_TYPES; do
     ;;
 
     *)
-      error "::error file=entrypoint.sh::The given archive type '${ARCHIVE_TYPE}' is not supported; please choose one of 'zip' or 'tar.gz'"
+      error "The given archive type '${ARCHIVE_TYPE}' is not supported; please choose one of 'zip' or 'tar.gz'"
       continue
   esac
 
-  printf "%s %s" "$(sha256sum "${ARCHIVE}" | cut -d ' ' -f 1)" "$FILE_NAME" > "${ARCHIVE}.sha256sum"
   FILE_NAME="${NAME}.${ARCHIVE/tmp./}"
+  printf "%s %s" "$(sha256sum "${ARCHIVE}" | cut -d ' ' -f 1)" "$FILE_NAME" > "${ARCHIVE}.sha256sum"
   CHECKSUM_FILE_NAME="${FILE_NAME}.sha256sum"
+
   mv "$ARCHIVE" "$FILE_NAME"
   mv "${ARCHIVE}.sha256sum" "$CHECKSUM_FILE_NAME"
   set_output "BUILT_ARCHIVE" "output/${FILE_NAME}"
