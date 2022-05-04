@@ -20,6 +20,7 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCKERFILE_HADOLINT_FILE_NAME: .hadolint.yaml
           VALIDATE_BASH: true
           VALIDATE_DOCKERFILE_HADOLINT: true
           VALIDATE_GITHUB_ACTIONS: true
