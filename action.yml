@@ -4,8 +4,6 @@ inputs:
   RUSTTARGET:
     description: 'Output target'
     required: true
-  GITHUB_TOKEN:
-    required: true
   EXTRA_FILES:
     description: 'List of extra files to include in build'
     required: false
@@ -27,6 +25,11 @@ inputs:
   TOOLCHAIN_VERSION:
     description: "The rust toolchain version to use (see https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification)"
     required: false
+outputs:
+  BUILT_ARCHIVE:
+    description: "Relative path to the archive containing compiled program"
+  BUILT_CHECKSUM:
+    description: "Relative path to the checksum of the archive"
 runs:
   using: 'docker'
   image: 'docker://ghcr.io/rust-build/rust-build.action:v1.2.7'

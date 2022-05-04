@@ -2,11 +2,15 @@
 
 set -eu
 
+set_output() {
+  echo "::set-output name=$1::$2"
+}
+
 if [ -z "${CMD_PATH+x}" ]; then
   export CMD_PATH=""
 fi
 
-OUTPUT_DIR="/output"
+OUTPUT_DIR="/github/workflow/output"
 mkdir -p "$OUTPUT_DIR"
 
 # Link repo
@@ -82,13 +86,18 @@ for ARCHIVE_TYPE in $ARCHIVE_TYPES; do
       continue
   esac
 
-  CHECKSUM=$(sha256sum "${ARCHIVE}" | cut -d ' ' -f 1)
+  printf "%s %s" "$(sha256sum "${ARCHIVE}" | cut -d ' ' -f 1)" "$FILE_NAME" > "${ARCHIVE}.sha256sum"
   FILE_NAME="${NAME}.${ARCHIVE/tmp./}"
+  CHECKSUM_FILE_NAME="${FILE_NAME}.sha256sum"
+  mv "$ARCHIVE" "$FILE_NAME"
+  mv "${ARCHIVE}.sha256sum" "$CHECKSUM_FILE_NAME"
+  set_output "BUILT_ARCHIVE" "output/${FILE_NAME}"
+  set_output "BUILT_CHECKSUM" "output/${CHECKSUM_FILE_NAME}"
 
   curl \
     --fail-with-body -sS \
     -X POST \
-    --data-binary @"${ARCHIVE}" \
+    --data-binary @"${FILE_NAME}" \
     -H 'Content-Type: application/octet-stream' \
     -H "Authorization: Bearer ${GITHUB_TOKEN}" \
     "${UPLOAD_URL}?name=${FILE_NAME}"
@@ -96,8 +105,8 @@ for ARCHIVE_TYPE in $ARCHIVE_TYPES; do
   curl \
     --fail-with-body -sS \
     -X POST \
-    --data "$CHECKSUM ${FILE_NAME}" \
+    --data-binary @"$CHECKSUM_FILE_NAME" \
     -H 'Content-Type: text/plain' \
     -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-    "${UPLOAD_URL}?name=${FILE_NAME}.sha256sum"
+    "${UPLOAD_URL}?name=${CHECKSUM_FILE_NAME}"
 done
