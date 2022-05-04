@@ -86,6 +86,36 @@ jobs:
           ARCHIVE_TYPES: ${{ matrix.archive }}
 ```
 
+### Upload output as an artifact (or use with other steps)
+```yml
+# .github/workflows/build.yml
+name: Build
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Compile
+        id: compile
+        uses: rust-build/rust-build.action@latest
+        with:
+          RUSTTARGET: x86_64-unknown-linux-musl
+          UPLOAD_MODE: none
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Binary
+          path: |
+            ${{ steps.compile.outputs.BUILT_ARCHIVE }}
+            ${{ steps.compile.outputs.BUILT_CHECKSUM }}
+```
+
 _Many target triples do not work, I am working on adding more support_
 
 ## Supported targets
