@@ -28,6 +28,9 @@ inputs:
   TOOLCHAIN_VERSION:
     description: 'The rust toolchain version to use (see https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification)'
     required: false
+  UPLOAD_MODE:
+    description: 'What method to use to upload compiled binaries, supported values: (release, none), default: release'
+    require: false
 outputs:
   BUILT_ARCHIVE:
     description: 'Relative path to the archive containing compiled program'

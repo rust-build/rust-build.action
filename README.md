@@ -20,6 +20,7 @@ PRE_BUILD         # Path to script to run before build e.g. "pre.sh"
 POST_BUILD        # Path to script to run after build e.g. "post.sh"
 MINIFY            # If set to "true", the resulting binary will be stripped and compressed by UPX. ("false" by default)
 TOOLCHAIN_VERSION # The rust toolchain version to use (see https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification)
+UPLOAD_MODE       # What method to use to upload compiled binaries, supported values: (release, none), default: release
 ```
 
 ## Examples

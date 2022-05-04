@@ -5,6 +5,15 @@ set -eu
 set_output() {
   echo "::set-output name=$1::$2"
 }
+info() {
+  echo "::info::$@"
+}
+warn() {
+  echo "::warning file=entrypoint.sh::$@"
+}
+error() {
+  echo "::error file=entrypoint.sh::$@"
+}
 
 # For backwards compatible also accept environment variable names, but parse all inputs in github
 # action format
@@ -17,6 +26,8 @@ PRE_BUILD="${INPUT_PRE_BUILD:-$PRE_BUILD}"
 POST_BUILD="${INPUT_POST_BUILD:-$POST_BUILD}"
 export MINIFY="${INPUT_MINIFY:-$MINIFY}"
 export TOOLCHAIN_VERSION="${INPUT_TOOLCHAIN_VERSION:-$TOOLCHAIN_VERSION}"
+UPLOAD_MODE="${INPUT_UPLOAD_MODE:-$UPLOAD_MODE}"
+UPLOAD_MODE="${UPLOAD_MODE:-release}"
 
 if [ -z "${CMD_PATH+x}" ]; then
   export CMD_PATH=""
@@ -40,7 +51,7 @@ if [ -f "$PRE_BUILD" ]; then
 fi
 # Build
 if ! FILE_LIST=$(/build.sh "$OUTPUT_DIR"); then
-  echo "::error file=entrypoint.sh::Build failed" >&2
+  error "Build failed"
   exit 1
 fi
 # Run post-build script
@@ -52,7 +63,7 @@ EVENT_DATA=$(cat "$GITHUB_EVENT_PATH")
 echo "$EVENT_DATA" | jq .
 UPLOAD_URL=$(echo "$EVENT_DATA" | jq -r .release.upload_url)
 if [ "$UPLOAD_URL" = "null" ]; then
-  echo "::error file=entrypoint.sh::The event provided did not contain an upload URL, this workflow can only be used with the release event." >&2
+  error "The event provided did not contain an upload URL, this workflow can only be used with the release event." >&2
   exit 1
 fi
 UPLOAD_URL=${UPLOAD_URL/\{?name,label\}/}
@@ -94,7 +105,7 @@ for ARCHIVE_TYPE in $ARCHIVE_TYPES; do
     ;;
 
     *)
-      echo "::error file=entrypoint.sh::The given archive type '${ARCHIVE_TYPE}' is not supported; please choose one of 'zip' or 'tar.gz'"
+      error "::error file=entrypoint.sh::The given archive type '${ARCHIVE_TYPE}' is not supported; please choose one of 'zip' or 'tar.gz'"
       continue
   esac
 
@@ -106,19 +117,25 @@ for ARCHIVE_TYPE in $ARCHIVE_TYPES; do
   set_output "BUILT_ARCHIVE" "output/${FILE_NAME}"
   set_output "BUILT_CHECKSUM" "output/${CHECKSUM_FILE_NAME}"
 
-  curl \
-    --fail-with-body -sS \
-    -X POST \
-    --data-binary @"${FILE_NAME}" \
-    -H 'Content-Type: application/octet-stream' \
-    -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-    "${UPLOAD_URL}?name=${FILE_NAME}"
+  if [ "$UPLOAD_MODE" = "release" ]; then
+    if [ "$UPLOAD_URL" = "null" ]; then
+      warn "UPLOAD_MODE \"release\" was specified but no URL to upload to could be detected"
+    else
+      curl \
+        --fail-with-body -sS \
+        -X POST \
+        --data-binary @"${FILE_NAME}" \
+        -H 'Content-Type: application/octet-stream' \
+        -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+        "${UPLOAD_URL}?name=${FILE_NAME}"
 
-  curl \
-    --fail-with-body -sS \
-    -X POST \
-    --data-binary @"$CHECKSUM_FILE_NAME" \
-    -H 'Content-Type: text/plain' \
-    -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-    "${UPLOAD_URL}?name=${CHECKSUM_FILE_NAME}"
+      curl \
+        --fail-with-body -sS \
+        -X POST \
+        --data-binary @"$CHECKSUM_FILE_NAME" \
+        -H 'Content-Type: text/plain' \
+        -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+        "${UPLOAD_URL}?name=${CHECKSUM_FILE_NAME}"
+    fi
+  fi
 done
