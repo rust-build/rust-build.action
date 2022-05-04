@@ -46,6 +46,7 @@ jobs:
         uses: rust-build/rust-build.action@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
           RUSTTARGET: ${{ matrix.target }}
           EXTRA_FILES: "README.md LICENSE"
 ```
@@ -79,6 +80,7 @@ jobs:
         uses: rust-build/rust-build.action@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
           RUSTTARGET: ${{ matrix.target }}
           ARCHIVE_TYPES: ${{ matrix.archive }}
 ```

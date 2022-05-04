@@ -6,6 +6,18 @@ set_output() {
   echo "::set-output name=$1::$2"
 }
 
+# For backwards compatible also accept environment variable names, but parse all inputs in github
+# action format
+export RUSTTARGET="${INPUT_RUSTTARGET:-$RUSTTARGET}"
+EXTRA_FILES="${INPUT_EXTRA_FILES:-$EXTRA_FILES}"
+# SRC_DIR is handled in build.sh
+ARCHIVE_TYPES="${INPUT_ARCHIVE_TYPES:-$ARCHIVE_TYPES}"
+ARCHIVE_NAME="${INPUT_ARCHIVE_NAME:-$ARCHIVE_NAME}"
+PRE_BUILD="${INPUT_PRE_BUILD:-$PRE_BUILD}"
+POST_BUILD="${INPUT_POST_BUILD:-$POST_BUILD}"
+export MINIFY="${INPUT_MINIFY:-$MINIFY}"
+export TOOLCHAIN_VERSION="${INPUT_TOOLCHAIN_VERSION:-$TOOLCHAIN_VERSION}"
+
 if [ -z "${CMD_PATH+x}" ]; then
   export CMD_PATH=""
 fi

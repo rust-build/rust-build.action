@@ -22,14 +22,17 @@ inputs:
   POST_BUILD:
     description: 'Relative path of script to run after building'
     required: false
+  MINIFY:
+    description: 'If set to "true", the resulting binary will be stripped and compressed by UPX. ("false" by default)'
+    required: false
   TOOLCHAIN_VERSION:
-    description: "The rust toolchain version to use (see https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification)"
+    description: 'The rust toolchain version to use (see https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification)'
     required: false
 outputs:
   BUILT_ARCHIVE:
-    description: "Relative path to the archive containing compiled program"
+    description: 'Relative path to the archive containing compiled program'
   BUILT_CHECKSUM:
-    description: "Relative path to the checksum of the archive"
+    description: 'Relative path to the checksum of the archive'
 runs:
   using: 'docker'
   image: 'docker://ghcr.io/rust-build/rust-build.action:v1.2.7'

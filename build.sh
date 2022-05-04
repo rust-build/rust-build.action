@@ -19,7 +19,12 @@ trap 'crash' ERR
 OUTPUT_DIR="$1"
 
 if [ -z "${SRC_DIR+0}" ]; then
-  info "No SRC_DIR is set, using repo base dir"
+  if [ -z "${INPUT_SRC_DIR+0}" ]; then
+    info "No SRC_DIR is set, using repo base dir"
+  else
+    info "Switching to src dir \"$INPUT_SRC_DIR\""
+    cd "$INPUT_SRC_DIR"
+  fi
 else
   info "Switching to src dir \"$SRC_DIR\""
   cd "$SRC_DIR"
