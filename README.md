@@ -88,5 +88,5 @@ _Many target triples do not work, I am working on adding more support_
 ## Supported targets
 - `x86_64-pc-windows-gnu`
 - `x86_64-unknown-linux-musl`
-- `wasm32-wasi` 
+- `wasm32-wasi`
 - `x86_64-apple-darwin`
