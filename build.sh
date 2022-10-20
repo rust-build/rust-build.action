@@ -42,14 +42,6 @@ exit 1
 ;;
 
 "wasm32-wasi") ;;
-"wasm32-unknown-emscripten") 
-mkdir -p /.cargo
-cat > /.cargo/config.toml << EOF
-[target.wasm32-unknown-emscripten]
-linker = "/usr/lib/emscripten-fastcomp/bin/clang"
-ar = "/usr/lib/emscripten-fastcomp/bin/llvm-ar"
-EOF
-;;
 
 "x86_64-apple-darwin")
 export CC=/opt/osxcross/target/bin/o64-clang
