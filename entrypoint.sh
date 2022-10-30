@@ -93,12 +93,12 @@ for ARCHIVE_TYPE in $ARCHIVE_TYPES; do
       zip -9r $ARCHIVE ${FILE_LIST}
     ;;
 
-    "tar"|"tar.gz"|"tar.bz2"|"tar.xz")
+    "tar"|"tar.gz"|"tar.bz2"|"tar.xz"|"tar.zst")
       tar caf $ARCHIVE ${FILE_LIST}
     ;;
 
     *)
-      error "The given archive type '${ARCHIVE_TYPE}' is not supported; please choose one of 'zip' or 'tar.gz'"
+      error "The given archive type '${ARCHIVE_TYPE}' is not supported; please use a supported archive type."
       continue
   esac
 
