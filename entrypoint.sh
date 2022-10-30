@@ -3,7 +3,7 @@
 set -eu
 
 set_output() {
-  echo "$1=$2" >> $GITHUB_OUTPUT
+  echo "$1=$2" >> "$GITHUB_OUTPUT"
 }
 info() {
   echo "::info::$*"
