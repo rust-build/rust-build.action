@@ -6,7 +6,7 @@ LABEL "repository"="http://github.com/rust-build/rust-build.action"
 LABEL "maintainer"="Douile <25043847+Douile@users.noreply.github.com>"
 
 # Add regular dependencies
-RUN apk add --no-cache curl=7.83.1-r3 jq=1.6-r1 git=2.36.3-r0 build-base=0.5-r3 bash=5.1.16-r2 \
+RUN apk add --no-cache curl=7.83.1-r4 jq=1.6-r1 git=2.36.3-r0 build-base=0.5-r3 bash=5.1.16-r2 \
   zip=3.0-r9 tar=1.34-r0 xz=5.2.5-r1 zstd=1.5.2-r1 upx=3.96-r1
 
 # Add windows dependencies
