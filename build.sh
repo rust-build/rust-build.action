@@ -79,7 +79,7 @@ for BINARY in $BINARIES; do
   if [ -x "./build.sh" ]; then
     OUTPUT=$(./build.sh "${CMD_PATH}" "${OUTPUT_DIR}")
   else
-    OPENSSL_LIB_DIR=/usr/lib OPENSSL_INCLUDE_DIR=/usr/include/openssl PKG_CONFIG_PATH=/usr/lib/pkgconfig CARGO_TARGET_DIR="./target" cargo build --release --target "$RUSTTARGET" --bin "$BINARY" >&2
+    OPENSSL_LIB_DIR=/usr/lib OPENSSL_INCLUDE_DIR=/usr/include/openssl PKG_CONFIG_PATH=/usr/lib/pkgconfig CARGO_TARGET_DIR="./target" RUSTFLAGS="-C target-feature=-crt-static" cargo build --release --target "$RUSTTARGET" --bin "$BINARY" >&2
     OUTPUT=$(find "target/${RUSTTARGET}/release/" -maxdepth 1 -type f -executable \( -name "${BINARY}" -o -name "${BINARY}.*" \) -print0 | xargs -0)
   fi
 
