@@ -10,6 +10,7 @@ For an example/template repo see [rust-build.test](https://github.com/rust-build
 This action will only work when you release a project as it uploads the artifacts to the release.
 
 ## Environment variables
+
 ```bash
 GITHUB_TOKEN      # Must be set to ${{ secrets.GITHUB_TOKEN }} - Allows uploading of artifacts to release
 RUSTTARGET        # The rust target triple, see README for supported triples
@@ -24,9 +25,12 @@ TOOLCHAIN_VERSION # The rust toolchain version to use (see https://rust-lang.git
 UPLOAD_MODE       # What method to use to upload compiled binaries, supported values: (release, none), default: release
 ```
 
+You can also use the `env` option to set any other argument variables for the build e.g. `RUSTFLAGS`.
+
 ## Examples
 
 ### Build windows and linux and upload as zip
+
 ```yml
 # .github/workflows/release.yml
 
@@ -56,6 +60,7 @@ jobs:
 ### Build windows, linux and mac with native zip types
 Will build native binaries for windows, linux and mac. Windows will upload as .zip, linux as .tar.gz, .tar.xz and
 .tar.zst, and mac as .zip.
+
 ```yml
 # .github/workflows/release.yml
 
@@ -89,6 +94,7 @@ jobs:
 ```
 
 ### Upload output as an artifact (or use with other steps)
+
 ```yml
 # .github/workflows/build.yml
 name: Build
@@ -118,10 +124,24 @@ jobs:
             ${{ steps.compile.outputs.BUILT_CHECKSUM }}
 ```
 
-_Many target triples do not work, I am working on adding more support_
+_Many target triples do not work, see #4_
 
 ## Supported targets
 - `x86_64-pc-windows-gnu`
 - `x86_64-unknown-linux-musl`
 - `wasm32-wasi`
 - `x86_64-apple-darwin`
+
+# Static linking
+
+Because this action is based on alpine some libraries won't dynamically link correctly (like openssl, see #66, #49, and #79). To enable static linking you can add this `RUSTFLAGS` option:
+
+```yml
+      - name: Compile
+        id: compile
+        uses: rust-build/rust-build.action@v1.4.3
+        env:
+          RUSTFLAGS: '-C target-feature=-crt-static'
+        with:
+          RUSTTARGET: x86_64-unknown-linux-musl
+```
