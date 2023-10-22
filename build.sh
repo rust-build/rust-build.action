@@ -1,14 +1,8 @@
 #!/bin/bash
 
-info() {
-  echo "::info:: $*" >&2
-}
-
-error() {
-  echo "::error file=build.sh:: $*" >&2
-}
-
 set -eu -o pipefail
+
+source /common.sh
 
 crash() {
   error "Command exited with non-zero exit code"

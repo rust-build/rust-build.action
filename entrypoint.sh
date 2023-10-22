@@ -2,34 +2,7 @@
 
 set -eu
 
-set_output() {
-  echo "$1=$2" >> "$GITHUB_OUTPUT"
-}
-info() {
-  echo "::info::$*"
-}
-warn() {
-  echo "::warning file=entrypoint.sh::$*"
-}
-error() {
-  echo "::error file=entrypoint.sh::$*"
-}
-
-# Variable tests
-is_empty() {
-  if [ "$1" = "" ]; then
-    true
-  else
-    false
-  fi
-}
-is_true() {
-  if [ "$1" = "yes" ] || [ "$1" = "true" ] || [ "$1" = "1" ]; then
-    true
-  else
-    false
-  fi
-}
+source /common.sh
 
 # For backwards compatible also accept environment variable names, but parse all inputs in github
 # action format
