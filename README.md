@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Compile and release
-        uses: rust-build/rust-build.action@v1.4.3
+        uses: rust-build/rust-build.action@v1.4.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -92,7 +92,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Compile and release
-        uses: rust-build/rust-build.action@v1.4.3
+        uses: rust-build/rust-build.action@v1.4.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -118,7 +118,7 @@ jobs:
       - uses: actions/checkout@master
       - name: Compile
         id: compile
-        uses: rust-build/rust-build.action@v1.4.3
+        uses: rust-build/rust-build.action@v1.4.4
         with:
           RUSTTARGET: x86_64-unknown-linux-musl
           UPLOAD_MODE: none
@@ -149,7 +149,7 @@ linking with
 ```yml
       - name: Compile
         id: compile
-        uses: rust-build/rust-build.action@v1.4.3
+        uses: rust-build/rust-build.action@v1.4.4
         with:
           RUSTTARGET: x86_64-unknown-linux-musl
           STATIC_LINKING: false
