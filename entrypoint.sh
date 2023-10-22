@@ -55,6 +55,25 @@ if ! is_empty "$STATIC_LINK" && ! printf "%s" "$RUSTFLAGS" | grep -q "crt-static
 fi
 export RUSTFLAGS
 
+EXTRA_COMMAND_FLAGS="${INPUT_EXTRA_COMMAND_FLAGS:-${EXTRA_COMMAND_FLAGS:-}}"
+
+# Features (without default features)
+FEATURES="${INPUT_FEATURES:-${FEATURES:-}}"
+
+if ! is_empty "$FEATURES"; then
+  EXTRA_COMMAND_FLAGS="$EXTRA_COMMAND_FLAGS --no-default-features"
+fi
+
+# Additional enabled features
+EXTRA_FEATURES="${INPUT_EXTRA_FEATURES:-${EXTRA_FEATURES:-}}"
+FEATURES="$FEATURES$EXTRA_FEATURES"
+
+if ! is_empty "$FEATURES"; then
+  EXTRA_COMMAND_FLAGS="$EXTRA_COMMAND_FLAGS --features $FEATURES"
+fi
+
+export EXTRA_COMMAND_FLAGS
+
 if [ -z "${CMD_PATH+x}" ]; then
   export CMD_PATH=""
 fi

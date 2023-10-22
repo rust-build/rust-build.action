@@ -37,6 +37,15 @@ inputs:
   STATIC_LINKING:
     description: 'Whether to statically link dependencies'
     required: false
+  EXTRA_COMMAND_FLAGS:
+    description: 'Extra flags to give to cargo build (space separated)'
+    required: false
+  EXTRA_FEATURES:
+    description: 'Extra features to enable for the build'
+    required: false
+  FEATURES:
+    description: 'Features to enable for the build (implies --no-default-features)'
+    required: false
 outputs:
   BUILT_ARCHIVE:
     description: 'Relative path to the archive containing compiled program'
