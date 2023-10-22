@@ -5,11 +5,15 @@
 
 _Disclamer: this project has no affiliation with the official Rust project or trademark._
 
-Automate publishing Rust build artifacts for GitHub releases through GitHub Actions (Based on [go-release.action](https://github.com/ngs/go-release.action))
+Automate publishing Rust build artifacts for GitHub releases through GitHub
+Actions (Based on
+[go-release.action](https://github.com/ngs/go-release.action))
 
-For an example/template repo see [rust-build.test](https://github.com/rust-build/rust-build.test)
+For an example/template repo see
+[rust-build.test](https://github.com/rust-build/rust-build.test)
 
-This action will only work when you release a project as it uploads the artifacts to the release.
+This action will only work when you release a project as it uploads the
+artifacts to the release.
 
 ## Environment variables
 
@@ -60,6 +64,7 @@ jobs:
 ```
 
 ### Build windows, linux and mac with native zip types
+
 Will build native binaries for windows, linux and mac. Windows will upload as .zip, linux as .tar.gz, .tar.xz and
 .tar.zst, and mac as .zip.
 
@@ -129,15 +134,18 @@ jobs:
 _Many target triples do not work, see #4_
 
 ## Supported targets
+
 - `x86_64-pc-windows-gnu`
 - `x86_64-unknown-linux-musl`
 - `wasm32-wasi`
 - `x86_64-apple-darwin`
 
-# Static linking
+## Static linking
 
-Some libraries (like openssl, see #49, #66, #79) don't statically link correctly on alpine. If you
-experience issues you can try disabling static linking with
+Some libraries (like openssl, see #49, #66, #79) don't statically link
+correctly on alpine. If you experience issues you can try disabling static
+linking with
+
 ```yml
       - name: Compile
         id: compile

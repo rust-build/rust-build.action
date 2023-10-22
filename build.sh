@@ -73,6 +73,8 @@ for BINARY in $BINARIES; do
   if [ -x "./build.sh" ]; then
     OUTPUT=$(./build.sh "${CMD_PATH}" "${OUTPUT_DIR}")
   else
+    # We need globbing here to expand the extra flags
+    # shellcheck disable=SC2086
     OPENSSL_LIB_DIR=/usr/lib OPENSSL_INCLUDE_DIR=/usr/include/openssl PKG_CONFIG_PATH=/usr/lib/pkgconfig CARGO_TARGET_DIR="./target" cargo build --release --target "$RUSTTARGET" --bin "$BINARY" $EXTRA_COMMAND_FLAGS >&2
     OUTPUT=$(find "target/${RUSTTARGET}/release/" -maxdepth 1 -type f -executable \( -name "${BINARY}" -o -name "${BINARY}.*" \) -print0 | xargs -0)
   fi
@@ -98,6 +100,7 @@ for BINARY in $BINARIES; do
 
   info "Saving $OUTPUT..."
 
+  # We need globbing here to move all files
   # shellcheck disable=SC2086
   mv $OUTPUT "$OUTPUT_DIR" || error "Unable to copy binary"
 
