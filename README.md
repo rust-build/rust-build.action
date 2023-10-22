@@ -1,7 +1,9 @@
-# Rust Release Binary Github Action
+# (Unofficial) Rust Release Binary Github Action
 
 [![.github/workflows/build.yml](https://github.com/rust-build/rust-build.test/actions/workflows/build.yml/badge.svg)](https://github.com/rust-build/rust-build.test/actions/workflows/build.yml)
 [![Lint](https://github.com/rust-build/rust-build.action/actions/workflows/linter.yml/badge.svg)](https://github.com/rust-build/rust-build.action/actions/workflows/linter.yml)
+
+_Disclamer: this project has no affiliation with the official Rust project or trademark._
 
 Automate publishing Rust build artifacts for GitHub releases through GitHub Actions (Based on [go-release.action](https://github.com/ngs/go-release.action))
 
