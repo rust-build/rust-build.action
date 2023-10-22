@@ -20,6 +20,6 @@ RUN ["/bin/bash", "-c", "cd /opt/osxcross && UNATTENDED=yes OSX_VERSION_MIN=10.8
 COPY entrypoint.sh /entrypoint.sh
 COPY build.sh /build.sh
 
-RUN chmod +x /entrypoint.sh /build.sh
+RUN chmod 555 /entrypoint.sh /build.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
