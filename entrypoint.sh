@@ -15,6 +15,22 @@ error() {
   echo "::error file=entrypoint.sh::$*"
 }
 
+# Variable tests
+is_empty() {
+  if [ "$1" = "" ]; then
+    true
+  else
+    false
+  fi
+}
+is_true() {
+  if [ "$1" = "yes" ] || [ "$1" = "true" ] || [ "$1" = "1" ]; then
+    true
+  else
+    false
+  fi
+}
+
 # For backwards compatible also accept environment variable names, but parse all inputs in github
 # action format
 export RUSTTARGET="${INPUT_RUSTTARGET:-${RUSTTARGET:-}}"
@@ -27,6 +43,17 @@ POST_BUILD="${INPUT_POST_BUILD:-${POST_BUILD:-}}"
 export MINIFY="${INPUT_MINIFY:-${MINIFY:-}}"
 export TOOLCHAIN_VERSION="${INPUT_TOOLCHAIN_VERSION:-${TOOLCHAIN_VERSION:-}}"
 UPLOAD_MODE="${INPUT_UPLOAD_MODE:-${UPLOAD_MODE:-release}}"
+RUSTFLAGS="${INPUT_RUSTFLAGS:-${RUSTFLAGS:-}}"
+STATIC_LINK="${INPUT_STATIC_LINKING:-${STATIC_LINK:-}}"
+
+if ! is_empty "$STATIC_LINK" && ! printf "%s" "$RUSTFLAGS" | grep -q "crt-static"; then
+  if is_true "$STATIC_LINK"; then
+    RUSTFLAGS="$RUSTFLAGS -C target-feature=+crt-static"
+  else
+    RUSTFLAGS="$RUSTFLAGS -C target-feature=-crt-static"
+  fi
+fi
+export RUSTFLAGS
 
 if [ -z "${CMD_PATH+x}" ]; then
   export CMD_PATH=""

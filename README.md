@@ -134,14 +134,13 @@ _Many target triples do not work, see #4_
 
 # Static linking
 
-Because this action is based on alpine some libraries won't dynamically link correctly (like openssl, see #66, #49, and #79). To enable static linking you can add this `RUSTFLAGS` option:
-
+Some libraries (like openssl, see #49, #66, #79) don't statically link correctly on alpine. If you
+experience issues you can try disabling static linking with
 ```yml
       - name: Compile
         id: compile
         uses: rust-build/rust-build.action@v1.4.3
-        env:
-          RUSTFLAGS: '-C target-feature=-crt-static'
         with:
           RUSTTARGET: x86_64-unknown-linux-musl
+          STATIC_LINKING: false
 ```

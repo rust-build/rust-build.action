@@ -33,7 +33,10 @@ inputs:
     required: false
   UPLOAD_MODE:
     description: 'What method to use to upload compiled binaries, supported values: (release, none), default: release'
-    require: false
+    required: false
+  STATIC_LINKING:
+    description: 'Whether to statically link dependencies'
+    required: false
 outputs:
   BUILT_ARCHIVE:
     description: 'Relative path to the archive containing compiled program'
