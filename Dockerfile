@@ -1,4 +1,4 @@
-FROM rust:1.76.0-alpine3.19
+FROM rust:1.82-alpine3.20
 
 LABEL "name"="Automate publishing Rust build artifacts for GitHub releases through GitHub Actions"
 LABEL "version"="1.4.5"
@@ -6,7 +6,7 @@ LABEL "repository"="http://github.com/rust-build/rust-build.action"
 LABEL "maintainer"="Douile <25043847+Douile@users.noreply.github.com>"
 
 # Add regular dependencies
-RUN apk add --no-cache curl jq git build-base bash zip tar xz zstd upx
+RUN apk add --no-cache curl jq git build-base bash zip tar xz zstd upx zlib-static
 
 # Add windows dependencies
 RUN apk add --no-cache mingw-w64-gcc
