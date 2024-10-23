@@ -18,17 +18,18 @@ artifacts to the release.
 ## Environment variables
 
 ```bash
-GITHUB_TOKEN      # Must be set to ${{ secrets.GITHUB_TOKEN }} - Allows uploading of artifacts to release
-RUSTTARGET        # The rust target triple, see README for supported triples
-EXTRA_FILES       # Space separated list of extra files to include in final output
-SRC_DIR           # Relative path to the src dir (directory with Cargo.toml in) from root of project
-ARCHIVE_TYPES     # Type(s) of archive(s) to create, e.g. "zip" (default) or "zip tar.gz"; supports: (zip, tar.[gz|bz2|xz|zst])
-ARCHIVE_NAME      # Full name of archive to upload (you must specify file extension and change this if building multiple targets)
-PRE_BUILD         # Path to script to run before build e.g. "pre.sh"
-POST_BUILD        # Path to script to run after build e.g. "post.sh"
-MINIFY            # If set to "true", the resulting binary will be stripped and compressed by UPX. ("false" by default)
-TOOLCHAIN_VERSION # The rust toolchain version to use (see https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification)
-UPLOAD_MODE       # What method to use to upload compiled binaries, supported values: (release, none), default: release
+GITHUB_TOKEN        # Must be set to ${{ secrets.GITHUB_TOKEN }} - Allows uploading of artifacts to release
+RUSTTARGET          # The rust target triple, see README for supported triples
+EXTRA_FILES         # Space separated list of extra files to include in final output
+SRC_DIR             # Relative path to the src dir (directory with Cargo.toml in) from root of project
+ARCHIVE_TYPES       # Type(s) of archive(s) to create, e.g. "zip" (default) or "zip tar.gz"; supports: (zip, tar.[gz|bz2|xz|zst])
+ARCHIVE_NAME        # Full name of archive to upload (you must specify file extension and change this if building multiple targets)
+PRE_BUILD           # Path to script to run before build e.g. "pre.sh"
+POST_BUILD          # Path to script to run after build e.g. "post.sh"
+MINIFY              # If set to "true", the resulting binary will be stripped and compressed by UPX. ("false" by default)
+TOOLCHAIN_VERSION   # The rust toolchain version to use (see https://rust-lang.github.io/rustup/concepts/toolchains.html#toolchain-specification)
+EXTRA_COMMAND_FLAGS # Extra flags passed to `cargo build` command (e.g. `--features=...` to activate features)
+UPLOAD_MODE         # What method to use to upload compiled binaries, supported values: (release, none), default: release
 ```
 
 You can also use the `env` option to set any other argument variables for the build e.g. `RUSTFLAGS`.
